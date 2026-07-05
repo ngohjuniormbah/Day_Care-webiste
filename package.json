@@ -1,0 +1,23 @@
+{
+  "name": "little-sprouts-daycare",
+  "version": "1.0.0",
+  "description": "Full-stack website for Little Sprouts Daycare — programs, enrollment, and contact management.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node db/seed.js"
+  },
+  "keywords": [
+    "daycare",
+    "childcare",
+    "express",
+    "sqlite"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2"
+  }
+}

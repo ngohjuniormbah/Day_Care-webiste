@@ -32,9 +32,9 @@ const testimonials = [
 ];
 
 const journal = [
-  { img: "/images/gallery/g4.svg", meta: "Development · Mar 2026", h: "Developing independence through simple self-care routines", p: "Small daily habits build confidence and self-reliance in young children." },
-  { img: "/images/gallery/g5.svg", meta: "Play · Mar 2026", h: "Building confidence in young children through guided play", p: "How structured play helps children take healthy social and emotional risks." },
-  { img: "/images/gallery/g6.svg", meta: "Values · Mar 2026", h: "Encouraging kindness and sharing through group experiences", p: "Everyday moments that nurture empathy and cooperation in early years." },
+  { img: "/images/gallery/g4.jpg", meta: "Development · Mar 2026", h: "Developing independence through simple self-care routines", p: "Small daily habits build confidence and self-reliance in young children." },
+  { img: "/images/gallery/g5.jpg", meta: "Play · Mar 2026", h: "Building confidence in young children through guided play", p: "How structured play helps children take healthy social and emotional risks." },
+  { img: "/images/gallery/g6.jpg", meta: "Values · Mar 2026", h: "Encouraging kindness and sharing through group experiences", p: "Everyday moments that nurture empathy and cooperation in early years." },
 ];
 
 export default function Home() {
@@ -70,7 +70,7 @@ export default function Home() {
           <FadeIn once direction="left" className="relative">
             <div className="absolute inset-0 m-auto w-[92%] rounded-full bg-gradient-to-br from-brand-soft to-transparent blur-2xl" />
             <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[40%_40%_46%_46%/46%] bg-brand-soft shadow-soft">
-              <Image src="/images/hero.svg" alt="A caregiver reading with happy children at Granny's Daycare Center" fill priority sizes="(max-width: 1024px) 90vw, 40vw" className="object-cover" />
+              <Image src="/images/hero.jpg" alt="A caregiver reading with happy children at Granny's Daycare Center" fill priority sizes="(max-width: 1024px) 90vw, 40vw" className="object-cover" />
             </div>
             <div className="absolute left-0 top-[8%] flex animate-floaty items-center gap-2.5 rounded-2xl bg-white px-4 py-3 text-sm font-semibold shadow-card">
               <span className="icon-chip tint-green h-9 w-9">🌳</span>
@@ -168,7 +168,7 @@ export default function Home() {
           <div className="grid items-center gap-10 md:grid-cols-2">
             <FadeIn direction="right">
               <div className="relative aspect-[5/4] overflow-hidden rounded-xl2 bg-brand-soft shadow-soft">
-                <Image src="/images/classroom.svg" alt="Toddlers exploring during a play-based learning session" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
+                <Image src="/images/classroom.jpg" alt="Toddlers exploring during a play-based learning session" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
               </div>
             </FadeIn>
             <FadeIn direction="left">

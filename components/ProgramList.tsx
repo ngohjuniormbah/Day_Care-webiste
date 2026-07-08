@@ -7,11 +7,11 @@ import { FadeIn } from "@/components/motion/FadeIn";
 import type { Program } from "@/lib/programs";
 
 const art: Record<string, string> = {
-  infant: "/images/care.svg",
-  toddler: "/images/classroom.svg",
-  preschool: "/images/playground.svg",
-  pre_k: "/images/facility.svg",
-  kinder: "/images/about-story.svg",
+  infant: "/images/care.jpg",
+  toddler: "/images/classroom.jpg",
+  preschool: "/images/playground.jpg",
+  pre_k: "/images/facility.jpg",
+  kinder: "/images/about-story.jpg",
 };
 
 export function ProgramList({ initial }: { initial: Program[] }) {
@@ -32,7 +32,7 @@ export function ProgramList({ initial }: { initial: Program[] }) {
           <article className="grid items-center gap-8 rounded-xl2 bg-white p-6 shadow-card md:grid-cols-[0.9fr_1.1fr]">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-brand-soft">
               <Image
-                src={art[p.icon] ?? "/images/classroom.svg"}
+                src={art[p.icon] ?? "/images/classroom.jpg"}
                 alt={`${p.name} programme`}
                 fill
                 sizes="(max-width: 768px) 100vw, 40vw"

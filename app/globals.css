@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream text-ink antialiased;
+    font-family: var(--font-poppins), system-ui, sans-serif;
+  }
+  h1, h2, h3, h4 {
+    @apply font-bold tracking-tight;
+    line-height: 1.15;
+  }
+  ::selection {
+    @apply bg-brand/20;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-[min(100%-2rem,theme(maxWidth.container))];
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-7 py-3 text-sm font-semibold text-white
+           shadow-[0_12px_24px_-12px_rgba(124,92,255,.7)] transition-all duration-300
+           hover:-translate-y-0.5 hover:shadow-[0_20px_32px_-14px_rgba(124,92,255,.8)];
+  }
+  .btn-lg { @apply px-8 py-4 text-base; }
+  .btn-ghost {
+    @apply bg-transparent text-brand border-2 border-brand-soft shadow-none hover:bg-brand-soft;
+  }
+  .btn-light { @apply bg-white text-brand shadow-card; }
+
+  .eyebrow {
+    @apply inline-block rounded-full bg-brand-soft px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-brand;
+  }
+
+  .card {
+    @apply rounded-xl2 bg-white p-7 shadow-card ring-1 ring-brand-soft/60 transition-all duration-300;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1.5 hover:shadow-soft;
+  }
+
+  .icon-chip {
+    @apply grid place-items-center rounded-2xl text-2xl;
+  }
+
+  .field-input {
+    @apply w-full rounded-xl border-[1.5px] border-brand-soft bg-brand-tint px-4 py-3 text-ink
+           outline-none transition focus:border-brand focus:bg-white focus:ring-4 focus:ring-brand/20;
+  }
+  .field-label {
+    @apply mb-1.5 block text-sm font-semibold text-ink;
+  }
+
+  .section {
+    @apply py-16 sm:py-20;
+  }
+
+  .link-underline {
+    @apply relative font-semibold text-brand after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-0
+           after:bg-brand after:transition-all after:duration-300 hover:after:w-full;
+  }
+}
+
+/* Tint utilities for icon chips */
+.tint-purple { @apply bg-brand-soft text-brand-dark; }
+.tint-green  { background: #e2f6ec; color: #2f8c63; }
+.tint-yellow { background: #fff2cf; color: #b58305; }
+.tint-coral  { background: #ffe6e1; color: #d85a49; }
+.tint-sky    { background: #e2f0fb; color: #2b7cb8; }

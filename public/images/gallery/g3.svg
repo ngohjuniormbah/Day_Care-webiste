@@ -1,31 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 640" role="img" aria-label="A caregiver and happy children at Granny's Daycare Center">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" role="img" aria-label="Creative arts and crafts">
   <defs>
     <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#efeafe"/><stop offset="1" stop-color="#fbf9ff"/>
+      <stop offset="0" stop-color="#ffe6e1"/><stop offset="1" stop-color="#fff6f4"/>
     </linearGradient>
   </defs>
-  <rect width="520" height="640" fill="url(#sky)"/>
-  <circle cx="426.4" cy="140.8" r="76.8" fill="#ffce4a"/>
-  <circle cx="104" cy="153.6" r="26" fill="#ffffff" opacity=".8"/>
-  <circle cx="135.20000000000002" cy="153.6" r="32" fill="#ffffff" opacity=".8"/>
-  <circle cx="171.6" cy="160" r="24" fill="#ffffff" opacity=".8"/>
-  <path d="M0 460.79999999999995 Q 156 396.8 312 460.79999999999995 T 520 448 V 640 H 0 Z" fill="#c9f0d8"/>
+  <rect width="600" height="450" fill="url(#sky)"/>
+  <circle cx="491.99999999999994" cy="99" r="54" fill="#ffce4a"/>
+  <circle cx="120" cy="108" r="26" fill="#ffffff" opacity=".8"/>
+  <circle cx="156" cy="108" r="32" fill="#ffffff" opacity=".8"/>
+  <circle cx="198" cy="112.5" r="24" fill="#ffffff" opacity=".8"/>
+  <path d="M0 324 Q 180 279 360 324 T 600 315 V 450 H 0 Z" fill="#d6ecff"/>
   <!-- three little kids -->
-  <g transform="translate(121.60000000000002,365.20000000000005)">
+  <g transform="translate(144.00000000000003,236)">
     <rect x="8" y="42" width="32" height="46" rx="14" fill="#ff7a6b"/>
     <circle cx="24" cy="26" r="20" fill="#ffe0c4"/>
     <path d="M4 22 a20 18 0 0 1 40 0 q-20 -12 -40 0Z" fill="#5b3a29"/>
     <circle cx="17" cy="26" r="3" fill="#2b2340"/><circle cx="31" cy="26" r="3" fill="#2b2340"/>
     <path d="M18 34 q6 6 12 0" stroke="#2b2340" stroke-width="2.5" fill="none" stroke-linecap="round"/>
   </g>
-  <g transform="translate(236,352.40000000000003)">
+  <g transform="translate(276,227)">
     <rect x="8" y="42" width="32" height="46" rx="14" fill="#7c5cff"/>
     <circle cx="24" cy="26" r="20" fill="#ffe0c4"/>
     <path d="M4 22 a20 18 0 0 1 40 0 q-20 -12 -40 0Z" fill="#5b3a29"/>
     <circle cx="17" cy="26" r="3" fill="#2b2340"/><circle cx="31" cy="26" r="3" fill="#2b2340"/>
     <path d="M18 34 q6 6 12 0" stroke="#2b2340" stroke-width="2.5" fill="none" stroke-linecap="round"/>
   </g>
-  <g transform="translate(350.4,365.20000000000005)">
+  <g transform="translate(408,236)">
     <rect x="8" y="42" width="32" height="46" rx="14" fill="#4fbf8b"/>
     <circle cx="24" cy="26" r="20" fill="#ffe0c4"/>
     <path d="M4 22 a20 18 0 0 1 40 0 q-20 -12 -40 0Z" fill="#5b3a29"/>
@@ -33,6 +33,6 @@
     <path d="M18 34 q6 6 12 0" stroke="#2b2340" stroke-width="2.5" fill="none" stroke-linecap="round"/>
   </g>
   <!-- blocks -->
-  <rect x="41.6" y="524.8" width="26" height="26" rx="5" fill="#ffce4a"/>
-  <rect x="67.60000000000001" y="524.8" width="26" height="26" rx="5" fill="#6fb7e8"/>
+  <rect x="48" y="369" width="26" height="26" rx="5" fill="#ffce4a"/>
+  <rect x="78" y="369" width="26" height="26" rx="5" fill="#6fb7e8"/>
 </svg>

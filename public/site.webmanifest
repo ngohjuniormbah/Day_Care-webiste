@@ -1,0 +1,12 @@
+{
+  "name": "Granny's Daycare Center",
+  "short_name": "Granny's Daycare",
+  "description": "Safe, loving childcare in Shell Obili, Yaoundé, Cameroon.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fdf5ec",
+  "theme_color": "#7c5cff",
+  "icons": [
+    { "src": "/images/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

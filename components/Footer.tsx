@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { nav, site } from "@/lib/site";
+import { nav, site as siteDefaults } from "@/lib/site";
 
 const socials = [
   { label: "Facebook", icon: "f" },
@@ -9,7 +9,10 @@ const socials = [
   { label: "X", icon: "✕" },
 ];
 
-export function Footer() {
+type Info = { tagline: string; address: string; phones: string[]; email: string; name: string };
+
+export function Footer({ info }: { info?: Info }) {
+  const site = { ...siteDefaults, ...info };
   return (
     <footer className="bg-[#241d38] pt-16 text-[#cfc8e0]">
       <div className="container-x grid gap-8 pb-4 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr]">

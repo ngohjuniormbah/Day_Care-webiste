@@ -129,6 +129,64 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* NEW: OUR JOURNEY */}
+      <section className="section bg-cream">
+        <div className="container-x">
+          <SectionHead eyebrow="Our journey" title={<>Growing With <span className="text-brand">Our Community</span></>}>
+            From a single grandmother&apos;s love for children to a trusted name in Yaoundé childcare.
+          </SectionHead>
+          <FadeInStagger className="mx-auto max-w-3xl space-y-4">
+            {[
+              { y: "The beginning", h: "A grandmother's love", p: "Granny's started as a warm home welcoming a handful of neighbourhood children with open arms." },
+              { y: "Growing up", h: "A real learning space", p: "We added a play-based programme, learning corners and a dedicated, caring team." },
+              { y: "Today", h: "A trusted centre", p: "Families across Yaoundé trust us daily with safe, loving, developmental childcare." },
+              { y: "Tomorrow", h: "Always improving", p: "We keep enriching our spaces, activities and care so every child can thrive." },
+            ].map((s, i) => (
+              <FadeInItem key={s.y}>
+                <div className="card flex items-start gap-4">
+                  <span className="grid h-10 w-10 flex-none place-items-center rounded-full bg-brand text-sm font-bold text-white">{i + 1}</span>
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wide text-brand">{s.y}</span>
+                    <h3 className="font-bold">{s.h}</h3>
+                    <p className="mt-0.5 text-sm text-ink-soft">{s.p}</p>
+                  </div>
+                </div>
+              </FadeInItem>
+            ))}
+          </FadeInStagger>
+        </div>
+      </section>
+
+      {/* NEW: PARENT PARTNERSHIP */}
+      <section className="section bg-gradient-to-b from-white to-brand-tint">
+        <div className="container-x grid items-center gap-12 md:grid-cols-2">
+          <FadeIn direction="right">
+            <span className="eyebrow mb-3">Working together</span>
+            <h2 className="text-3xl font-extrabold">A True Partnership With <span className="text-brand">Parents</span></h2>
+            <p className="mt-3 text-ink-soft">
+              You know your child best. We keep you close to their day with open, honest communication so you always feel
+              connected — even when you&apos;re apart.
+            </p>
+            <ul className="my-5 space-y-3">
+              {[
+                "Friendly daily updates on how your child is doing",
+                "An open-door policy — visit and chat any time",
+                "Regular check-ins on progress and milestones",
+                "We listen, adapt and care around your family's needs",
+              ].map((x) => (
+                <li key={x} className="relative pl-8 text-ink-soft before:absolute before:left-0 before:top-0.5 before:grid before:h-5 before:w-5 before:place-items-center before:rounded-full before:bg-brand-soft before:text-xs before:font-bold before:text-brand before:content-['✓']">{x}</li>
+              ))}
+            </ul>
+            <Link href="/contact" className="btn">Talk to Us</Link>
+          </FadeIn>
+          <FadeIn direction="left">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-xl2 bg-brand-soft shadow-soft">
+              <Image src="/images/classroom.jpg" alt="A caring learning environment at Granny's Daycare Center" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       <CtaBanner
         title="Come See It for Yourself"
         text="We'd love to show you around and answer your questions. Book a friendly tour of our center in Shell Obili, Yaoundé."

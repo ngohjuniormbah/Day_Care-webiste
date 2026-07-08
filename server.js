@@ -28,5 +28,5 @@ if (count === 0) {
 }
 
 app.listen(PORT, () => {
-  console.log(`🌱 Little Sprouts Daycare running at http://localhost:${PORT}`);
+  console.log(`🏡 Granny's Daycare Center running at http://localhost:${PORT}`);
 });

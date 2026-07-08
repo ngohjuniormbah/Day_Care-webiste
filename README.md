@@ -1,95 +1,86 @@
 # 🏡 Granny's Daycare Center — Full-Stack Website
 
-A warm, modern, responsive **multi-page** website for a childcare center in
-**Shell Obili, Yaoundé, Cameroon**, with a working backend for program
-listings, enrollment requests, and contact messages.
+A warm, modern, responsive website for a childcare center in
+**Shell Obili, Yaoundé, Cameroon**, built with **Next.js (App Router) +
+TypeScript + Tailwind CSS**, a **Node.js** backend (Next.js Route Handlers +
+SQLite), and smooth **fade-in / fade-out animations** powered by Framer Motion.
 
-> **Design & imagery:** The site is built to match the provided design mock-up
-> (purple + warm-cream childcare theme). The photo set from the design zip was
-> not available in the build environment, so every image is a lightweight inline
-> SVG illustration that reads well at any size. **To use real photos**, drop them
-> into `public/images/` (and `public/images/gallery/`) using the same filenames
-> — e.g. `hero.svg → hero.jpg` and update the `src` in the HTML. Design tokens
-> (colours, spacing, radii) live at the top of `public/css/styles.css` under
-> `:root`.
+> **Design & imagery:** The site matches the provided design mock-up (purple +
+> warm-cream childcare theme). The photo set from the design zip was not
+> available in the build environment, so every image is a lightweight inline
+> **SVG illustration**. To use real photos, drop them into `public/images/`
+> (and `public/images/gallery/`) and point the `src` at them. Design tokens
+> (colours, fonts, radii, shadows) live in `tailwind.config.ts`.
 
-## 📄 Pages
+## 🧱 Tech stack
 
-The site is built as separate pages, each with its own SEO metadata:
+| Layer      | Technology                                            |
+| ---------- | ----------------------------------------------------- |
+| Framework  | Next.js 15 (App Router, React 19)                     |
+| Language   | TypeScript                                            |
+| Styling    | Tailwind CSS 3                                         |
+| Animations | Framer Motion (scroll fade-in/out + page transitions) |
+| Backend    | Node.js — Next.js Route Handlers                      |
+| Database   | SQLite (`better-sqlite3`)                             |
 
-| Page          | File                  | Purpose                                        |
-| ------------- | --------------------- | ---------------------------------------------- |
-| Home          | `public/index.html`   | Hero, approach, care plans, programs, reviews  |
-| About         | `public/about.html`   | Story, mission, values, facility description   |
-| Gallery       | `public/gallery.html` | Photo gallery of the center                    |
-| Program       | `public/program.html` | Programmes (API-driven) + flexible care plans  |
-| Contact Us    | `public/contact.html` | Contact + enrollment forms, Google Map         |
+## 🎬 Animations
 
-## ✨ Features
+- **Fade in / fade out on scroll** — the `FadeIn` / `FadeInStagger` components
+  (`components/motion/FadeIn.tsx`) reveal content as it enters the viewport and
+  fade it back out as it leaves (`viewport={{ once: false }}`), with
+  directional slide (up/down/left/right) and staggered children.
+- **Page-transition fade** — `app/template.tsx` fades every route change.
+- **Micro-interactions** — floating hero cards, hover lifts on cards, animated
+  mobile menu. All animations respect `prefers-reduced-motion`.
 
-- **Fully responsive** multi-page site with a sticky header + mobile nav.
-- **Animations:** scroll-reveal on every section, animated hero stat counters,
-  floating hero cards, and hover lifts on cards (all respect
-  `prefers-reduced-motion`).
-- **SEO-ready:** per-page `<title>`/meta description/keywords, canonical URLs,
-  Open Graph + Twitter tags, JSON-LD `ChildCare` structured data,
-  `robots.txt`, `sitemap.xml`, and a web app manifest.
-- **Favicon logo:** a custom SVG house-and-heart mark (`public/images/favicon.svg`).
-- **Google Maps** embed pinned to **Shell Obili, Yaoundé, Cameroon** on the
-  contact page.
-- **Working backend** (Node.js + Express + SQLite): programmes are fetched live
-  and enrollment/contact forms submit with validation and inline feedback.
+## 📄 Pages (App Router)
+
+| Route       | File                     | Purpose                                       |
+| ----------- | ------------------------ | --------------------------------------------- |
+| `/`         | `app/page.tsx`           | Hero, approach, care plans, programs, reviews |
+| `/about`    | `app/about/page.tsx`     | Story, mission, values, facility description  |
+| `/gallery`  | `app/gallery/page.tsx`   | Photo gallery                                 |
+| `/program`  | `app/program/page.tsx`   | Programmes (API-driven) + flexible care plans |
+| `/contact`  | `app/contact/page.tsx`   | Contact + enrollment forms, Google Map        |
+
+## 🔌 API (Node.js route handlers)
+
+- `GET  /api/programs` — list programmes (seeded on first run).
+- `POST /api/enroll` — submit an enrollment request (validated & stored).
+- `POST /api/contact` — submit a contact message (validated & stored).
+- `GET  /api/health` — health check.
+
+Submissions persist to a local SQLite database at `data/daycare.db`, created
+and seeded automatically on first run.
+
+## 🔍 SEO
+
+- Per-page `metadata` (title/description/canonical) via the Next.js Metadata API.
+- Open Graph + Twitter cards, JSON-LD `ChildCare` structured data.
+- Generated `robots.txt` (`app/robots.ts`) and `sitemap.xml` (`app/sitemap.ts`).
+- Custom SVG favicon logo (`public/images/favicon.svg`).
+
+## 🗺️ Location
+
+The contact page embeds a Google Map pinned to **Shell Obili, Yaoundé,
+Cameroon** (no API key required), with an "Open in Google Maps" link.
 
 ## 🚀 Getting started
 
 ```bash
-npm install     # install dependencies
-npm start       # start the server → http://localhost:3000
+npm install       # install dependencies
+npm run dev       # dev server → http://localhost:3000
+# or
+npm run build && npm run start   # production build + serve
 ```
 
-Then open **http://localhost:3000** in your browser.
+## 🎨 Customizing
 
-```bash
-npm run dev     # start with auto-reload (node --watch)
-npm run seed    # re-seed the programs table
-```
-
-## 🔌 API
-
-- `GET  /api/programs` — list all programme offerings.
-- `POST /api/enroll` — submit an enrollment request (validated & stored).
-- `POST /api/contact` — submit a contact message (validated & stored).
-- `GET  /api/admin/enrollments` — view submissions (Basic Auth protected).
-- `GET  /api/admin/contacts` — view messages (Basic Auth protected).
-- `GET  /health` — health check.
-
-Data is stored in a local SQLite database at `data/daycare.db`, created and
-seeded automatically on first run.
-
-## 🔐 Admin access
-
-The `/api/admin/*` endpoints are protected with HTTP Basic Auth. Defaults:
-
-| Setting  | Env var      | Default      |
-| -------- | ------------ | ------------ |
-| Username | `ADMIN_USER` | `admin`      |
-| Password | `ADMIN_PASS` | `sprouts123` |
-| Port     | `PORT`       | `3000`       |
-
-**Change these before deploying.** Example:
-
-```bash
-ADMIN_USER=owner ADMIN_PASS='a-strong-secret' PORT=8080 npm start
-```
-
-## 🎨 Customizing to match your brand
-
-- **Colors / spacing:** edit the `:root` design tokens in `public/css/styles.css`.
-- **Copy & sections:** edit the individual `public/*.html` pages.
-- **Programs / pricing:** edit `db/seed.js`, then run `npm run seed`.
-- **Contact details / address:** search-and-replace the phone, email and
-  "Shell Obili, Yaoundé" address across `public/*.html`.
-- **Real photos:** replace the SVGs in `public/images/` with your own images.
+- **Colors / fonts / radii:** edit `tailwind.config.ts` and `app/globals.css`.
+- **Site name, address, phone, email, map:** edit `lib/site.ts`.
+- **Programmes / pricing:** edit `lib/programs.ts` (re-seeds an empty DB).
+- **Copy & sections:** edit the page files under `app/`.
+- **Real photos:** replace the SVGs in `public/images/`.
 
 ## 📄 License
 

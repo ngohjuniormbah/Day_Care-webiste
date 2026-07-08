@@ -42,14 +42,14 @@ export const metadata: Metadata = {
     description: site.description,
     url: site.url,
     siteName: site.name,
-    images: [{ url: "/images/hero.svg", width: 520, height: 640, alt: site.name }],
+    images: [{ url: "/images/og.jpg", width: 1200, height: 630, alt: site.name }],
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: `${site.name} | Childcare in Yaoundé`,
     description: site.description,
-    images: ["/images/hero.svg"],
+    images: ["/images/og.jpg"],
   },
 };
 
@@ -60,7 +60,7 @@ const jsonLd = {
   "@type": "ChildCare",
   name: site.name,
   description: site.description,
-  image: `${site.url}/images/hero.svg`,
+  image: `${site.url}/images/og.jpg`,
   url: site.url,
   telephone: site.phones[0].replace(/\s/g, ""),
   email: site.email,

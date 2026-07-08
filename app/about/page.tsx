@@ -43,7 +43,7 @@ export default function AboutPage() {
         <div className="container-x grid items-center gap-12 md:grid-cols-2">
           <FadeIn direction="right">
             <div className="relative aspect-[5/4] overflow-hidden rounded-xl2 bg-brand-soft shadow-soft">
-              <Image src="/images/about-story.svg" alt="Children and caregivers enjoying a day at Granny's Daycare Center" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
+              <Image src="/images/about-story.jpg" alt="Children and caregivers enjoying a day at Granny's Daycare Center" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
             </div>
           </FadeIn>
           <FadeIn direction="left">

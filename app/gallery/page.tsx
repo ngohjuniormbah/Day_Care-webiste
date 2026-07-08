@@ -18,15 +18,15 @@ const spaces = [
 ];
 
 const photos = [
-  { src: "/images/gallery/g1.svg", cap: "Outdoor play in the grass yard" },
-  { src: "/images/gallery/g2.svg", cap: "Story time together" },
-  { src: "/images/gallery/g3.svg", cap: "Arts & crafts" },
-  { src: "/images/gallery/g4.svg", cap: "Learning through play" },
-  { src: "/images/gallery/g5.svg", cap: "Group activities" },
-  { src: "/images/gallery/g6.svg", cap: "Music & movement" },
-  { src: "/images/gallery/g7.svg", cap: "Snack & nutrition time" },
-  { src: "/images/gallery/g8.svg", cap: "Rest & cozy corner" },
-  { src: "/images/gallery/g9.svg", cap: "Nature exploration" },
+  { src: "/images/gallery/g1.jpg", cap: "Outdoor play in the grass yard" },
+  { src: "/images/gallery/g2.jpg", cap: "Story time together" },
+  { src: "/images/gallery/g3.jpg", cap: "Arts & crafts" },
+  { src: "/images/gallery/g4.jpg", cap: "Learning through play" },
+  { src: "/images/gallery/g5.jpg", cap: "Group activities" },
+  { src: "/images/gallery/g6.jpg", cap: "Music & movement" },
+  { src: "/images/gallery/g7.jpg", cap: "Snack & nutrition time" },
+  { src: "/images/gallery/g8.jpg", cap: "Rest & cozy corner" },
+  { src: "/images/gallery/g9.jpg", cap: "Nature exploration" },
 ];
 
 export default function GalleryPage() {

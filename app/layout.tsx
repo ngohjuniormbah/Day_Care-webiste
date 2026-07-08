@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
 import { site } from "@/lib/site";
 
 const poppins = Poppins({
@@ -55,46 +52,10 @@ export const metadata: Metadata = {
 
 export const viewport = { themeColor: "#7c5cff" };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "ChildCare",
-  name: site.name,
-  description: site.description,
-  image: `${site.url}/images/og.jpg`,
-  url: site.url,
-  telephone: site.phones[0].replace(/\s/g, ""),
-  email: site.email,
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Shell Obili",
-    addressLocality: site.locality,
-    addressCountry: site.country,
-  },
-  areaServed: "Yaoundé, Cameroon",
-  priceRange: "$$",
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "07:00",
-      closes: "18:00",
-    },
-  ],
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={poppins.variable}>
-      <body>
-        <Script
-          id="ld-json"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
-        <Header />
-        <main>{children}</main>
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

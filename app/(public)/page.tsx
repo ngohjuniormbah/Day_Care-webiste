@@ -2,6 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { FadeIn, FadeInStagger, FadeInItem } from "@/components/motion/FadeIn";
 import { CtaBanner, SectionHead } from "@/components/ui";
+import { Faq } from "@/components/Faq";
+import { NewsletterForm } from "@/components/NewsletterForm";
+import { getContent } from "@/lib/content-store";
 
 const trust = [
   { ic: "🏡", tint: "tint-purple", h: "Safe Environment", p: "Secure, gated premises with a caring, watchful team." },
@@ -19,16 +22,29 @@ const approach = [
   { ic: "🤸", tint: "tint-purple", h: "Active Playtime", p: "Guided movement and play that supports healthy development." },
 ];
 
-const plans = [
-  { ic: "🌤️", tint: "tint-yellow", name: "Full Day", price: "30,000", unit: "FCFA / month", a: ["07:00–18:00", "1–5 yrs"], f: ["Meals & snacks included", "Nap & rest time", "Full learning programme"], featured: false },
-  { ic: "☀️", tint: "tint-purple", name: "Half Day", price: "18,000", unit: "FCFA / month", a: ["08:00–13:00", "2–4 yrs"], f: ["Morning snack included", "Play-based learning", "Creative activities"], featured: true },
-  { ic: "📅", tint: "tint-green", name: "Weekly", price: "9,000", unit: "FCFA / week", a: ["Mon–Fri", "1–5 yrs"], f: ["Flexible weekly booking", "Meals & snacks included", "Perfect for busy weeks"], featured: false },
+const schedule = [
+  { t: "07:00 – 08:30", ic: "🌅", h: "Warm Welcome & Free Play", p: "Gentle drop-off, hugs and open play as friends arrive." },
+  { t: "08:30 – 09:00", ic: "🍎", h: "Morning Snack", p: "A healthy snack to fuel a busy morning of learning." },
+  { t: "09:00 – 10:30", ic: "📚", h: "Learning Circle", p: "Stories, songs, letters, numbers and show-and-tell." },
+  { t: "10:30 – 12:00", ic: "🎨", h: "Creative & Outdoor Play", p: "Arts, crafts and fresh-air play in the enclosed yard." },
+  { t: "12:00 – 13:00", ic: "🍽️", h: "Lunch Time", p: "A warm, nutritious meal shared together." },
+  { t: "13:00 – 15:00", ic: "😴", h: "Rest & Nap", p: "Quiet, cosy nap time in our dedicated rest area." },
+  { t: "15:00 – 16:30", ic: "🧩", h: "Discovery & Games", p: "Puzzles, building blocks and small-group activities." },
+  { t: "16:30 – 18:00", ic: "👋", h: "Wind-down & Pick-up", p: "Calm play, a daily recap and happy goodbyes." },
 ];
 
-const testimonials = [
-  { av: "A", n: "Aïcha N.", r: "Parent, Obili", t: "Granny's Daycare feels like a second home for my daughter. The staff are warm, attentive and truly caring. I never worry when she's here." },
-  { av: "P", n: "Paul M.", r: "Parent, Yaoundé", t: "The learning programme is wonderful. My son has grown so confident and comes home excited to share what he learned each day." },
-  { av: "S", n: "Sandrine K.", r: "Parent, Efoulan", t: "Clean, safe and full of love. The flexible hours are perfect for our family. I recommend Granny's to every parent I know." },
+const safety = [
+  { ic: "🔒", tint: "tint-purple", h: "Secure Access", p: "Gated premises with controlled entry and constant supervision." },
+  { ic: "🧼", tint: "tint-green", h: "Clean & Hygienic", p: "Daily cleaning routines and healthy hygiene habits for all." },
+  { ic: "⛑️", tint: "tint-coral", h: "First-Aid Ready", p: "Staff trained in child first-aid and emergency procedures." },
+  { ic: "🍏", tint: "tint-yellow", h: "Balanced Nutrition", p: "Freshly prepared, balanced meals and allergy-aware menus." },
+];
+
+const team = [
+  { av: "N", tint: "tint-purple", name: "Granny Hancy", role: "Founder & Lead Caregiver" },
+  { av: "M", tint: "tint-green", name: "Mama Rose", role: "Toddler Room Teacher" },
+  { av: "E", tint: "tint-coral", name: "Aunty Estelle", role: "Preschool Teacher" },
+  { av: "B", tint: "tint-sky", name: "Aunty Brenda", role: "Infant Care Specialist" },
 ];
 
 const journal = [
@@ -37,31 +53,29 @@ const journal = [
   { img: "/images/gallery/g6.jpg", meta: "Values · Mar 2026", h: "Encouraging kindness and sharing through group experiences", p: "Everyday moments that nurture empathy and cooperation in early years." },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const { hero, plans, testimonials, faqs } = await getContent();
+
   return (
     <>
       {/* HERO */}
       <section className="relative overflow-hidden py-16 sm:py-20">
         <div className="container-x grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <FadeIn once direction="right">
-            <span className="eyebrow mb-4">🌟 Trusted childcare in Yaoundé</span>
+            <span className="eyebrow mb-4">{hero.badge}</span>
             <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
-              A Safe &amp; <span className="text-brand">Loving</span> Place for Your Child to{" "}
-              <span className="text-brand">Learn</span>, Play &amp; Grow
+              {hero.title} <span className="text-brand">{hero.titleAccent}</span>
             </h1>
-            <p className="mt-5 max-w-lg text-lg text-ink-soft">
-              At Granny&apos;s Daycare Center we provide a warm, secure and nurturing environment where your little ones
-              grow with confidence — every day is a blend of fun and learning.
-            </p>
+            <p className="mt-5 max-w-lg text-lg text-ink-soft">{hero.lead}</p>
             <div className="mt-7 flex flex-wrap gap-3.5">
               <Link href="/contact" className="btn btn-lg">Get in Touch</Link>
               <Link href="/program" className="btn btn-ghost btn-lg">Explore Programs</Link>
             </div>
             <div className="mt-9 flex flex-wrap gap-8">
-              {[["150+", "Happy children"], ["12+", "Caring educators"], ["8+", "Years of care"]].map(([n, l]) => (
-                <div key={l}>
-                  <div className="text-3xl font-bold text-ink">{n}</div>
-                  <div className="text-sm text-ink-muted">{l}</div>
+              {hero.stats.map((s) => (
+                <div key={s.l}>
+                  <div className="text-3xl font-bold text-ink">{s.n}</div>
+                  <div className="text-sm text-ink-muted">{s.l}</div>
                 </div>
               ))}
             </div>
@@ -70,7 +84,7 @@ export default function Home() {
           <FadeIn once direction="left" className="relative">
             <div className="absolute inset-0 m-auto w-[92%] rounded-full bg-gradient-to-br from-brand-soft to-transparent blur-2xl" />
             <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[40%_40%_46%_46%/46%] bg-brand-soft shadow-soft">
-              <Image src="/images/hero.jpg" alt="A caregiver reading with happy children at Granny's Daycare Center" fill priority sizes="(max-width: 1024px) 90vw, 40vw" className="object-cover" />
+              <Image src="/images/hero.jpg" alt="A caregiver with happy children at Granny's Daycare Center" fill priority sizes="(max-width: 1024px) 90vw, 40vw" className="object-cover" />
             </div>
             <div className="absolute left-0 top-[8%] flex animate-floaty items-center gap-2.5 rounded-2xl bg-white px-4 py-3 text-sm font-semibold shadow-card">
               <span className="icon-chip tint-green h-9 w-9">🌳</span>
@@ -132,25 +146,17 @@ export default function Home() {
               <FadeInItem key={pl.name}>
                 <div className={`card card-hover relative h-full text-center ${pl.featured ? "ring-2 ring-brand" : ""}`}>
                   {pl.featured && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white">
-                      Most popular
-                    </span>
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white">Most popular</span>
                   )}
                   <div className={`icon-chip ${pl.tint} mx-auto mb-3 h-16 w-16 rounded-full text-2xl`}>{pl.ic}</div>
                   <h3 className="text-2xl font-bold">{pl.name}</h3>
                   <div className="my-1 text-3xl font-bold text-brand">
-                    {pl.price}
-                    <span className="ml-1 text-sm font-medium text-ink-muted">{pl.unit}</span>
+                    {pl.price}<span className="ml-1 text-sm font-medium text-ink-muted">{pl.unit}</span>
                   </div>
                   <div className="my-5 flex justify-around border-y border-brand-soft py-4">
-                    <div><div className="text-xs text-ink-muted">Hours / Days</div><strong>{pl.a[0]}</strong></div>
-                    <div><div className="text-xs text-ink-muted">Ages</div><strong>{pl.a[1]}</strong></div>
+                    <div><div className="text-xs text-ink-muted">Hours / Days</div><strong>{pl.hours}</strong></div>
+                    <div><div className="text-xs text-ink-muted">Ages</div><strong>{pl.ages}</strong></div>
                   </div>
-                  <ul className="mb-6 space-y-2 text-left text-sm text-ink-soft">
-                    {pl.f.map((f) => (
-                      <li key={f} className="relative pl-6 before:absolute before:left-0 before:font-bold before:text-accent-green before:content-['✓']">{f}</li>
-                    ))}
-                  </ul>
                   <Link href="/contact" className="btn w-full">Book Now</Link>
                 </div>
               </FadeInItem>
@@ -159,8 +165,31 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PROGRAMS PREVIEW */}
+      {/* NEW: A DAY AT GRANNY'S */}
       <section className="section bg-gradient-to-b from-white to-brand-tint">
+        <div className="container-x">
+          <SectionHead eyebrow="Daily rhythm" title={<>A Typical Day at <span className="text-brand">Granny&apos;s</span></>}>
+            A gentle, predictable routine that helps children feel safe, settled and ready to learn and play.
+          </SectionHead>
+          <FadeInStagger className="mx-auto grid max-w-4xl gap-4 sm:grid-cols-2">
+            {schedule.map((s) => (
+              <FadeInItem key={s.t}>
+                <div className="card flex items-start gap-4">
+                  <span className="icon-chip tint-purple h-12 w-12 flex-none text-xl">{s.ic}</span>
+                  <div>
+                    <span className="text-xs font-semibold uppercase tracking-wide text-brand">{s.t}</span>
+                    <h3 className="font-bold">{s.h}</h3>
+                    <p className="mt-0.5 text-sm text-ink-soft">{s.p}</p>
+                  </div>
+                </div>
+              </FadeInItem>
+            ))}
+          </FadeInStagger>
+        </div>
+      </section>
+
+      {/* PROGRAMS PREVIEW */}
+      <section className="section bg-cream">
         <div className="container-x">
           <SectionHead eyebrow="Programmes" title={<>Our Amazing <span className="text-brand">Programs</span></>}>
             Our caring approach and thoughtfully designed programmes set us apart, with small age steps that ensure precious attention for every child.
@@ -190,6 +219,85 @@ export default function Home() {
         </div>
       </section>
 
+      {/* NEW: WHY PARENTS CHOOSE US */}
+      <section className="section bg-gradient-to-b from-white to-brand-tint">
+        <div className="container-x grid items-center gap-12 md:grid-cols-2">
+          <FadeIn direction="right">
+            <span className="eyebrow mb-3">Why families trust us</span>
+            <h2 className="text-3xl font-extrabold">Why Parents Choose <span className="text-brand">Granny&apos;s</span></h2>
+            <p className="mt-3 text-ink-soft">
+              For years, families across Yaoundé have trusted us with their most precious little ones. Here&apos;s what
+              makes Granny&apos;s different.
+            </p>
+            <ul className="my-5 space-y-3">
+              {[
+                "Warm, loving care that treats every child like family",
+                "Small groups for real, personal attention",
+                "A safe, secure and spotless environment",
+                "Daily updates so you always know how your child is doing",
+                "Flexible plans that fit around your work and budget",
+              ].map((x) => (
+                <li key={x} className="relative pl-8 text-ink-soft before:absolute before:left-0 before:top-0.5 before:grid before:h-5 before:w-5 before:place-items-center before:rounded-full before:bg-brand-soft before:text-xs before:font-bold before:text-brand before:content-['✓']">{x}</li>
+              ))}
+            </ul>
+            <Link href="/about" className="btn">Learn More About Us</Link>
+          </FadeIn>
+          <FadeIn direction="left">
+            <div className="relative aspect-[5/4] overflow-hidden rounded-xl2 bg-brand-soft shadow-soft">
+              <Image src="/images/about-story.jpg" alt="Granny's Daycare Center premises in Shell Obili" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
+            </div>
+            <div className="mt-5 grid grid-cols-3 gap-3 text-center">
+              {[["100%", "Safe & secure"], ["1:5", "Care ratio"], ["★ 5.0", "Parent rating"]].map(([n, l]) => (
+                <div key={l} className="card py-4">
+                  <div className="text-xl font-bold text-brand">{n}</div>
+                  <div className="text-xs text-ink-muted">{l}</div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* NEW: HEALTH & SAFETY */}
+      <section className="section bg-cream">
+        <div className="container-x">
+          <SectionHead eyebrow="Health & safety" title={<>Your Child&apos;s Safety Comes <span className="text-brand">First</span></>}>
+            Peace of mind for parents — every detail is designed to keep your little one safe, healthy and happy.
+          </SectionHead>
+          <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {safety.map((s) => (
+              <FadeInItem key={s.h}>
+                <div className="card card-hover h-full text-center">
+                  <span className={`icon-chip ${s.tint} mx-auto mb-4 h-14 w-14`}>{s.ic}</span>
+                  <h3 className="font-bold">{s.h}</h3>
+                  <p className="mt-1 text-sm text-ink-soft">{s.p}</p>
+                </div>
+              </FadeInItem>
+            ))}
+          </FadeInStagger>
+        </div>
+      </section>
+
+      {/* NEW: MEET THE TEAM */}
+      <section className="section bg-gradient-to-b from-white to-brand-tint">
+        <div className="container-x">
+          <SectionHead eyebrow="Our team" title={<>Meet Our <span className="text-brand">Caring Team</span></>}>
+            Warm, patient and qualified educators who love what they do — and love your children.
+          </SectionHead>
+          <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {team.map((m) => (
+              <FadeInItem key={m.name}>
+                <div className="card card-hover h-full text-center">
+                  <span className={`icon-chip ${m.tint} mx-auto mb-4 grid h-20 w-20 place-items-center rounded-full text-2xl font-bold`}>{m.av}</span>
+                  <h3 className="font-bold">{m.name}</h3>
+                  <p className="mt-0.5 text-sm text-brand">{m.role}</p>
+                </div>
+              </FadeInItem>
+            ))}
+          </FadeInStagger>
+        </div>
+      </section>
+
       {/* TESTIMONIALS */}
       <section className="section bg-cream">
         <div className="container-x">
@@ -214,8 +322,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* JOURNAL */}
+      {/* NEW: FAQ */}
       <section className="section bg-gradient-to-b from-white to-brand-tint">
+        <div className="container-x">
+          <SectionHead eyebrow="Good to know" title={<>Frequently Asked <span className="text-brand">Questions</span></>}>
+            Everything you need to know before your child joins the Granny&apos;s family.
+          </SectionHead>
+          <FadeIn>
+            <Faq items={faqs} />
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* JOURNAL */}
+      <section className="section bg-cream">
         <div className="container-x">
           <SectionHead eyebrow="Our journal" title={<>Moments of <span className="text-brand">Learning</span>, Play, and Growth</>}>
             Stay updated with the latest school news, classroom highlights and educational insights to support your child&apos;s learning journey.
@@ -237,6 +357,24 @@ export default function Home() {
               </FadeInItem>
             ))}
           </FadeInStagger>
+        </div>
+      </section>
+
+      {/* NEW: NEWSLETTER */}
+      <section className="section bg-cream pt-0">
+        <div className="container-x">
+          <FadeIn>
+            <div className="relative overflow-hidden rounded-xl3 bg-gradient-to-br from-brand to-brand-dark p-10 text-center text-white sm:p-12">
+              <div className="pointer-events-none absolute -right-10 -top-16 h-52 w-52 rounded-full bg-white/10" />
+              <h2 className="relative text-2xl font-extrabold sm:text-3xl">Stay in the Loop</h2>
+              <p className="relative mx-auto mt-2 max-w-xl text-white/85">
+                Join our newsletter for parenting tips, centre news and early-learning ideas — straight to your inbox.
+              </p>
+              <div className="relative mt-6">
+                <NewsletterForm />
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 

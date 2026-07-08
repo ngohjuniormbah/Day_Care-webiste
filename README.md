@@ -35,13 +35,17 @@ SQLite), and smooth **fade-in / fade-out animations** powered by Framer Motion.
 
 ## 📄 Pages (App Router)
 
-| Route       | File                     | Purpose                                       |
-| ----------- | ------------------------ | --------------------------------------------- |
-| `/`         | `app/page.tsx`           | Hero, approach, care plans, programs, reviews |
-| `/about`    | `app/about/page.tsx`     | Story, mission, values, facility description  |
-| `/gallery`  | `app/gallery/page.tsx`   | Photo gallery                                 |
-| `/program`  | `app/program/page.tsx`   | Programmes (API-driven) + flexible care plans |
-| `/contact`  | `app/contact/page.tsx`   | Contact + enrollment forms, Google Map        |
+Public pages live in the `app/(public)/` route group (which provides the header,
+footer and announcement banner); the admin lives in `app/admin/`.
+
+| Route       | File                            | Purpose                                       |
+| ----------- | ------------------------------- | --------------------------------------------- |
+| `/`         | `app/(public)/page.tsx`         | Hero, approach, plans, daily rhythm, programs, why-us, safety, team, reviews, FAQ, journal, newsletter |
+| `/about`    | `app/(public)/about/page.tsx`   | Story, mission, values, facility, journey, parent partnership |
+| `/gallery`  | `app/(public)/gallery/page.tsx` | Photo gallery, spaces, follow-us              |
+| `/program`  | `app/(public)/program/page.tsx` | Programmes, curriculum, plans, what's included, FAQ |
+| `/contact`  | `app/(public)/contact/page.tsx` | Contact + enrollment forms, hours, map, FAQ   |
+| `/admin`    | `app/admin/*`                   | Password-protected content dashboard          |
 
 ## 🔌 API (Node.js route handlers)
 
@@ -55,6 +59,29 @@ and logged (best-effort write to the OS temp dir in `lib/store.ts`) so the app
 runs on read-only serverless filesystems like Vercel without any database.
 **For durable storage**, wire an email service or a hosted database
 (e.g. Vercel Postgres / Turso) into `saveSubmission` in `lib/store.ts`.
+
+## 🔐 Admin panel
+
+A clean, password-protected dashboard at **`/admin`** lets you manage the site
+content without touching code:
+
+- **`/admin/login`** — sign in with the admin password.
+- **`/admin`** — dashboard overview.
+- **`/admin/content`** — edit the announcement banner, contact details, home
+  hero, pricing plans, programs, testimonials and FAQs. Changes apply to the
+  live site immediately. Includes **Export** (download the content as JSON) and
+  **Reset to defaults**.
+- **`/admin/submissions`** — view messages from the contact and enrollment forms.
+
+Access is gated by `middleware.ts` (an httpOnly cookie). Set a strong password
+via the **`ADMIN_PASSWORD`** environment variable (default: `granny-admin-2026`
+— change this before going live).
+
+Editable content lives in `lib/content.ts` (defaults) and is persisted by
+`lib/content-store.ts` — to `./data/content.json` on a persistent Node host, or
+best-effort to the OS temp dir on serverless. For durable production edits, use
+**Export** to commit the JSON, or wire a hosted store (e.g. Vercel KV) into
+`saveContent`.
 
 ## 🔍 SEO
 

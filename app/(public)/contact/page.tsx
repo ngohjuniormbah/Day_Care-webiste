@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { FadeIn } from "@/components/motion/FadeIn";
+import { FadeIn, FadeInStagger, FadeInItem } from "@/components/motion/FadeIn";
 import { PageHero, SectionHead } from "@/components/ui";
 import { ContactForm, EnrollForm } from "@/components/Forms";
-import { site } from "@/lib/site";
+import { Faq } from "@/components/Faq";
+import { getContent } from "@/lib/content-store";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -11,14 +12,29 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-const info = [
-  { ic: "📍", tint: "tint-purple", h: "Address", v: site.address },
-  { ic: "📞", tint: "tint-green", h: "Phone", v: site.phones.join(" · ") },
-  { ic: "✉️", tint: "tint-sky", h: "Email", v: site.email },
-  { ic: "🕑", tint: "tint-yellow", h: "Opening Hours", v: site.hours },
+const hoursTable = [
+  { d: "Monday – Friday", h: "07:00 – 18:00" },
+  { d: "Saturday", h: "By appointment" },
+  { d: "Sunday & public holidays", h: "Closed" },
 ];
 
-export default function ContactPage() {
+const socials = [
+  { label: "Facebook", icon: "f" },
+  { label: "Instagram", icon: "◎" },
+  { label: "WhatsApp", icon: "✆" },
+  { label: "X", icon: "✕" },
+];
+
+export default async function ContactPage() {
+  const { site, faqs } = await getContent();
+
+  const info = [
+    { ic: "📍", tint: "tint-purple", h: "Address", v: site.address },
+    { ic: "📞", tint: "tint-green", h: "Phone", v: site.phones.join(" · ") },
+    { ic: "✉️", tint: "tint-sky", h: "Email", v: site.email },
+    { ic: "🕑", tint: "tint-yellow", h: "Opening Hours", v: site.hours },
+  ];
+
   return (
     <>
       <PageHero crumb="Contact" title={<>Contact Us — <span className="text-brand">We&apos;d Love to Hear From You</span></>}>
@@ -32,7 +48,7 @@ export default function ContactPage() {
             <span className="eyebrow mb-3">Get in touch</span>
             <h2 className="text-3xl font-extrabold">Visit Granny&apos;s Daycare Center</h2>
             <p className="mt-3 text-ink-soft">
-              We&apos;re located in a secure, gated home in Shell Obili, Yaoundé. Drop by for a tour, or contact us any time
+              We&apos;re located in a secure, gated home in {site.address}. Drop by for a tour, or contact us any time
               during opening hours.
             </p>
             <ul className="mt-6 space-y-5">
@@ -46,6 +62,13 @@ export default function ContactPage() {
                 </li>
               ))}
             </ul>
+            <div className="mt-6 flex gap-2.5">
+              {socials.map((s) => (
+                <a key={s.label} href="#" aria-label={s.label} className="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand transition hover:bg-brand hover:text-white">
+                  {s.icon}
+                </a>
+              ))}
+            </div>
           </FadeIn>
           <FadeIn direction="left">
             <ContactForm />
@@ -77,8 +100,40 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* MAP */}
+      {/* NEW: OPENING HOURS + HOW TO FIND US */}
       <section className="section bg-cream">
+        <div className="container-x grid gap-8 md:grid-cols-2">
+          <FadeIn direction="right">
+            <div className="card h-full">
+              <span className="eyebrow mb-3">Opening hours</span>
+              <h3 className="text-2xl font-bold">When We&apos;re Open</h3>
+              <ul className="mt-4 divide-y divide-brand-soft">
+                {hoursTable.map((r) => (
+                  <li key={r.d} className="flex items-center justify-between py-3 text-sm">
+                    <span className="text-ink-soft">{r.d}</span>
+                    <span className="font-semibold text-ink">{r.h}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </FadeIn>
+          <FadeIn direction="left">
+            <div className="card h-full">
+              <span className="eyebrow mb-3">How to find us</span>
+              <h3 className="text-2xl font-bold">Getting Here</h3>
+              <ul className="mt-4 space-y-3 text-sm text-ink-soft">
+                <li className="flex gap-3"><span className="text-brand">①</span> We&apos;re located near Shell Obili, easy to reach from across Yaoundé.</li>
+                <li className="flex gap-3"><span className="text-brand">②</span> Look out for our secure, gated premises with the Granny&apos;s sign.</li>
+                <li className="flex gap-3"><span className="text-brand">③</span> Free, safe drop-off and pick-up right at the entrance.</li>
+                <li className="flex gap-3"><span className="text-brand">④</span> Call us on arrival and a caregiver will welcome you in.</li>
+              </ul>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* MAP */}
+      <section className="section bg-gradient-to-b from-white to-brand-tint">
         <div className="container-x">
           <SectionHead eyebrow="Find us" title={<>We&apos;re in <span className="text-brand">Shell Obili, Yaoundé</span></>}>
             Located near Shell Obili in Yaoundé, Cameroon — easy to reach for families across the city.
@@ -98,6 +153,18 @@ export default function ContactPage() {
                 Open in Google Maps ↗
               </a>
             </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* NEW: FAQ */}
+      <section className="section bg-cream">
+        <div className="container-x">
+          <SectionHead eyebrow="Questions" title={<>Frequently Asked <span className="text-brand">Questions</span></>}>
+            Can&apos;t find what you&apos;re looking for? Send us a message above and we&apos;ll be happy to help.
+          </SectionHead>
+          <FadeIn>
+            <Faq items={faqs} />
           </FadeIn>
         </div>
       </section>

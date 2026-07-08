@@ -9,7 +9,17 @@ import { tmpdir } from "os";
 // database (e.g. Vercel Postgres / Turso) into `saveSubmission`.
 const FILE = join(tmpdir(), "grannys-daycare-submissions.json");
 
-type Submission = { type: string; data: Record<string, unknown>; at: string };
+export type Submission = { type: string; data: Record<string, unknown>; at: string };
+
+const g = globalThis as unknown as { __gdc_subs?: Submission[] };
+
+export async function getSubmissions(): Promise<Submission[]> {
+  try {
+    return JSON.parse(await readFile(FILE, "utf8"));
+  } catch {
+    return g.__gdc_subs ?? [];
+  }
+}
 
 export async function saveSubmission(
   type: string,
@@ -22,6 +32,7 @@ export async function saveSubmission(
     /* first write, or the ephemeral temp file was cleared */
   }
   all.push({ type, data, at: new Date().toISOString() });
+  g.__gdc_subs = all; // in-memory mirror for the admin viewer
   try {
     await writeFile(FILE, JSON.stringify(all));
   } catch {

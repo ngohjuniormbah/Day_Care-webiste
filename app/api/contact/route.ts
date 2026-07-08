@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import db from "@/lib/db";
+import { saveSubmission } from "@/lib/store";
 
 export const runtime = "nodejs";
 
@@ -28,21 +28,17 @@ export async function POST(req: Request) {
     );
   }
 
-  const info = db
-    .prepare(
-      `INSERT INTO contacts (name, email, subject, message) VALUES (@name, @email, @subject, @message)`
-    )
-    .run({
-      name: clean(b.name),
-      email: clean(b.email),
-      subject: clean(b.subject) || null,
-      message: clean(b.message),
-    });
+  const id = await saveSubmission("contact", {
+    name: clean(b.name),
+    email: clean(b.email),
+    subject: clean(b.subject) || null,
+    message: clean(b.message),
+  });
 
   return NextResponse.json(
     {
       ok: true,
-      id: info.lastInsertRowid,
+      id,
       message: "Thanks for reaching out! A member of our team will reply soon.",
     },
     { status: 201 }

@@ -20,8 +20,8 @@ SQLite), and smooth **fade-in / fade-out animations** powered by Framer Motion.
 | Language   | TypeScript                                            |
 | Styling    | Tailwind CSS 3                                         |
 | Animations | Framer Motion (scroll fade-in/out + page transitions) |
-| Backend    | Node.js — Next.js Route Handlers                      |
-| Database   | SQLite (`better-sqlite3`)                             |
+| Backend    | Node.js — Next.js Route Handlers (serverless-ready)   |
+| Hosting    | Vercel-ready (no writable-filesystem dependency)      |
 
 ## 🎬 Animations
 
@@ -45,13 +45,16 @@ SQLite), and smooth **fade-in / fade-out animations** powered by Framer Motion.
 
 ## 🔌 API (Node.js route handlers)
 
-- `GET  /api/programs` — list programmes (seeded on first run).
-- `POST /api/enroll` — submit an enrollment request (validated & stored).
-- `POST /api/contact` — submit a contact message (validated & stored).
+- `GET  /api/programs` — list programmes (from `lib/programs.ts`).
+- `POST /api/enroll` — submit an enrollment request (validated).
+- `POST /api/contact` — submit a contact message (validated).
 - `GET  /api/health` — health check.
 
-Submissions persist to a local SQLite database at `data/daycare.db`, created
-and seeded automatically on first run.
+Programme data is served from `lib/programs.ts`. Form submissions are validated
+and logged (best-effort write to the OS temp dir in `lib/store.ts`) so the app
+runs on read-only serverless filesystems like Vercel without any database.
+**For durable storage**, wire an email service or a hosted database
+(e.g. Vercel Postgres / Turso) into `saveSubmission` in `lib/store.ts`.
 
 ## 🔍 SEO
 

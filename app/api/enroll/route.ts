@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import db from "@/lib/db";
+import { saveSubmission } from "@/lib/store";
 
 export const runtime = "nodejs";
 
@@ -29,26 +29,21 @@ export async function POST(req: Request) {
     );
   }
 
-  const info = db
-    .prepare(
-      `INSERT INTO enrollments (parent_name, email, phone, child_name, child_age, program, start_date, message)
-       VALUES (@parent_name, @email, @phone, @child_name, @child_age, @program, @start_date, @message)`
-    )
-    .run({
-      parent_name: clean(b.parent_name),
-      email: clean(b.email),
-      phone: clean(b.phone),
-      child_name: clean(b.child_name),
-      child_age: clean(b.child_age),
-      program: clean(b.program),
-      start_date: clean(b.start_date) || null,
-      message: clean(b.message) || null,
-    });
+  const id = await saveSubmission("enrollment", {
+    parent_name: clean(b.parent_name),
+    email: clean(b.email),
+    phone: clean(b.phone),
+    child_name: clean(b.child_name),
+    child_age: clean(b.child_age),
+    program: clean(b.program),
+    start_date: clean(b.start_date) || null,
+    message: clean(b.message) || null,
+  });
 
   return NextResponse.json(
     {
       ok: true,
-      id: info.lastInsertRowid,
+      id,
       message: `Thank you, ${clean(b.parent_name)}! We received your enrollment request for ${clean(
         b.child_name
       )} and will be in touch within one business day.`,

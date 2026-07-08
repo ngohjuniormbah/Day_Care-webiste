@@ -3,8 +3,7 @@ import Link from "next/link";
 import { FadeIn, FadeInStagger, FadeInItem } from "@/components/motion/FadeIn";
 import { CtaBanner, PageHero, SectionHead } from "@/components/ui";
 import { ProgramList } from "@/components/ProgramList";
-import { programSeed, type Program } from "@/lib/programs";
-import db from "@/lib/db";
+import { programSeed } from "@/lib/programs";
 
 export const metadata: Metadata = {
   title: "Programs",
@@ -27,17 +26,8 @@ const plans = [
   { ic: "📅", tint: "tint-green", name: "Weekly", price: "9,000", unit: "FCFA / week", a: ["Mon–Fri", "1–5 yrs"], f: ["Flexible weekly booking", "Meals & snacks included", "Perfect for busy weeks", "Pay as you go"], featured: false },
 ];
 
-function getPrograms(): Program[] {
-  try {
-    const rows = db.prepare("SELECT * FROM programs ORDER BY id").all() as any[];
-    return rows.map((p) => ({ ...p, features: JSON.parse(p.features || "[]") }));
-  } catch {
-    return programSeed;
-  }
-}
-
 export default function ProgramPage() {
-  const programs = getPrograms();
+  const programs = programSeed;
 
   return (
     <>

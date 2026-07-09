@@ -6,9 +6,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState, type ReactNode } from "react";
 
 const links = [
-  { href: "/admin", label: "Dashboard", icon: "🏠" },
-  { href: "/admin/content", label: "Site Content", icon: "✏️" },
-  { href: "/admin/submissions", label: "Submissions", icon: "📩" },
+  { href: "/admin", label: "Dashboard" },
+  { href: "/admin/content", label: "Site Content" },
+  { href: "/admin/submissions", label: "Submissions" },
 ];
 
 export function AdminShell({ children }: { children: ReactNode }) {
@@ -36,9 +36,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
 
       <div className="mx-auto flex max-w-7xl gap-6 p-4 md:p-6">
         {/* Sidebar */}
-        <aside
-          className={`${open ? "block" : "hidden"} md:block w-full md:w-60 md:flex-none`}
-        >
+        <aside className={`${open ? "block" : "hidden"} md:block w-full md:w-60 md:flex-none`}>
           <div className="sticky top-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
             <Link href="/admin" className="mb-5 flex items-center gap-2.5 px-2">
               <Image src="/images/favicon.svg" alt="" width={36} height={36} />
@@ -55,22 +53,21 @@ export function AdminShell({ children }: { children: ReactNode }) {
                     key={l.href}
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition ${
+                    className={`block rounded-xl px-4 py-2.5 text-sm font-medium transition ${
                       active ? "bg-brand text-white shadow" : "text-slate-600 hover:bg-slate-100"
                     }`}
                   >
-                    <span>{l.icon}</span>
                     {l.label}
                   </Link>
                 );
               })}
             </nav>
             <div className="mt-5 space-y-1 border-t border-slate-100 pt-4">
-              <Link href="/" target="_blank" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100">
-                <span>🌐</span> View live site ↗
+              <Link href="/" target="_blank" className="block rounded-xl px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100">
+                View live site ↗
               </Link>
-              <button onClick={logout} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50">
-                <span>🚪</span> Log out
+              <button onClick={logout} className="block w-full rounded-xl px-4 py-2.5 text-left text-sm font-medium text-red-600 hover:bg-red-50">
+                Log out
               </button>
             </div>
           </div>

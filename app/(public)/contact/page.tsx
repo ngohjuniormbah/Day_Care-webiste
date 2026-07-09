@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { FadeIn, FadeInStagger, FadeInItem } from "@/components/motion/FadeIn";
+import { FadeIn } from "@/components/motion/FadeIn";
 import { PageHero, SectionHead } from "@/components/ui";
 import { ContactForm, EnrollForm } from "@/components/Forms";
 import { Faq } from "@/components/Faq";
@@ -12,34 +12,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "/contact" },
 };
 
-const hoursTable = [
-  { d: "Monday – Friday", h: "07:00 – 18:00" },
-  { d: "Saturday", h: "By appointment" },
-  { d: "Sunday & public holidays", h: "Closed" },
-];
-
-const socials = [
-  { label: "Facebook", icon: "f" },
-  { label: "Instagram", icon: "◎" },
-  { label: "WhatsApp", icon: "✆" },
-  { label: "X", icon: "✕" },
-];
-
 export default async function ContactPage() {
-  const { site, faqs } = await getContent();
+  const { site, contact, faqs } = await getContent();
 
   const info = [
-    { ic: "📍", tint: "tint-purple", h: "Address", v: site.address },
-    { ic: "📞", tint: "tint-green", h: "Phone", v: site.phones.join(" · ") },
-    { ic: "✉️", tint: "tint-sky", h: "Email", v: site.email },
-    { ic: "🕑", tint: "tint-yellow", h: "Opening Hours", v: site.hours },
+    { h: "Address", v: site.address },
+    { h: "Phone", v: site.phones.join(" · ") },
+    { h: "Email", v: site.email },
+    { h: "Opening Hours", v: site.hours },
   ];
 
   return (
     <>
-      <PageHero crumb="Contact" title={<>Contact Us — <span className="text-brand">We&apos;d Love to Hear From You</span></>}>
-        Have a question or ready to enroll your child? Reach out and a member of our team will get back to you promptly.
-      </PageHero>
+      <PageHero crumb="Contact" title={contact.title}>{contact.intro}</PageHero>
 
       {/* CONTACT + MESSAGE FORM */}
       <section className="section bg-cream">
@@ -51,28 +36,23 @@ export default async function ContactPage() {
               We&apos;re located in a secure, gated home in {site.address}. Drop by for a tour, or contact us any time
               during opening hours.
             </p>
-            <ul className="mt-6 space-y-5">
+            <ul className="mt-6 space-y-4">
               {info.map((i) => (
-                <li key={i.h} className="flex items-start gap-4">
-                  <span className={`icon-chip ${i.tint} h-11 w-11 flex-none text-lg`}>{i.ic}</span>
-                  <div>
-                    <strong className="block">{i.h}</strong>
-                    <span className="text-sm text-ink-soft">{i.v}</span>
-                  </div>
+                <li key={i.h} className="border-l-2 border-brand pl-4">
+                  <strong className="block text-sm">{i.h}</strong>
+                  <span className="text-sm text-ink-soft">{i.v}</span>
                 </li>
               ))}
             </ul>
             <div className="mt-6 flex gap-2.5">
-              {socials.map((s) => (
-                <a key={s.label} href="#" aria-label={s.label} className="grid h-10 w-10 place-items-center rounded-xl bg-brand-soft text-brand transition hover:bg-brand hover:text-white">
-                  {s.icon}
+              {["Facebook", "Instagram", "WhatsApp", "X"].map((s) => (
+                <a key={s} href="#" className="rounded-full bg-brand-soft px-4 py-2 text-sm font-semibold text-brand transition hover:bg-brand hover:text-white">
+                  {s}
                 </a>
               ))}
             </div>
           </FadeIn>
-          <FadeIn direction="left">
-            <ContactForm />
-          </FadeIn>
+          <FadeIn direction="left"><ContactForm /></FadeIn>
         </div>
       </section>
 
@@ -86,21 +66,17 @@ export default async function ContactPage() {
               Ready to give your child the best start? Fill in the enrollment request and we&apos;ll be in touch within one
               business day to confirm availability and next steps.
             </p>
-            <ul className="my-5 space-y-2">
+            <ul className="my-5 space-y-3">
               {["Simple, friendly enrollment process", "Flexible full-day, half-day & weekly plans", "A safe, loving space your child will love"].map((x) => (
-                <li key={x} className="relative pl-8 text-ink-soft before:absolute before:left-0 before:top-0.5 before:grid before:h-5 before:w-5 before:place-items-center before:rounded-full before:bg-brand-soft before:text-xs before:font-bold before:text-brand before:content-['✓']">
-                  {x}
-                </li>
+                <li key={x} className="relative pl-7 text-ink-soft before:absolute before:left-0 before:top-2 before:h-2.5 before:w-2.5 before:rounded-full before:bg-brand before:content-['']">{x}</li>
               ))}
             </ul>
           </FadeIn>
-          <FadeIn direction="left">
-            <EnrollForm />
-          </FadeIn>
+          <FadeIn direction="left"><EnrollForm /></FadeIn>
         </div>
       </section>
 
-      {/* NEW: OPENING HOURS + HOW TO FIND US */}
+      {/* OPENING HOURS + HOW TO FIND US */}
       <section className="section bg-cream">
         <div className="container-x grid gap-8 md:grid-cols-2">
           <FadeIn direction="right">
@@ -108,10 +84,10 @@ export default async function ContactPage() {
               <span className="eyebrow mb-3">Opening hours</span>
               <h3 className="text-2xl font-bold">When We&apos;re Open</h3>
               <ul className="mt-4 divide-y divide-brand-soft">
-                {hoursTable.map((r) => (
-                  <li key={r.d} className="flex items-center justify-between py-3 text-sm">
-                    <span className="text-ink-soft">{r.d}</span>
-                    <span className="font-semibold text-ink">{r.h}</span>
+                {contact.hours.map((r) => (
+                  <li key={r.day} className="flex items-center justify-between py-3 text-sm">
+                    <span className="text-ink-soft">{r.day}</span>
+                    <span className="font-semibold text-ink">{r.time}</span>
                   </li>
                 ))}
               </ul>
@@ -122,10 +98,11 @@ export default async function ContactPage() {
               <span className="eyebrow mb-3">How to find us</span>
               <h3 className="text-2xl font-bold">Getting Here</h3>
               <ul className="mt-4 space-y-3 text-sm text-ink-soft">
-                <li className="flex gap-3"><span className="text-brand">①</span> We&apos;re located near Shell Obili, easy to reach from across Yaoundé.</li>
-                <li className="flex gap-3"><span className="text-brand">②</span> Look out for our secure, gated premises with the Granny&apos;s sign.</li>
-                <li className="flex gap-3"><span className="text-brand">③</span> Free, safe drop-off and pick-up right at the entrance.</li>
-                <li className="flex gap-3"><span className="text-brand">④</span> Call us on arrival and a caregiver will welcome you in.</li>
+                {contact.findUs.map((x, i) => (
+                  <li key={x} className="flex gap-3">
+                    <span className="font-bold text-brand">{i + 1}.</span> {x}
+                  </li>
+                ))}
               </ul>
             </div>
           </FadeIn>
@@ -157,15 +134,13 @@ export default async function ContactPage() {
         </div>
       </section>
 
-      {/* NEW: FAQ */}
+      {/* FAQ */}
       <section className="section bg-cream">
         <div className="container-x">
           <SectionHead eyebrow="Questions" title={<>Frequently Asked <span className="text-brand">Questions</span></>}>
             Can&apos;t find what you&apos;re looking for? Send us a message above and we&apos;ll be happy to help.
           </SectionHead>
-          <FadeIn>
-            <Faq items={faqs} />
-          </FadeIn>
+          <FadeIn><Faq items={faqs} /></FadeIn>
         </div>
       </section>
     </>

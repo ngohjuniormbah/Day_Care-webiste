@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { FadeIn, FadeInStagger, FadeInItem } from "@/components/motion/FadeIn";
-import { CtaBanner, PageHero, SectionHead } from "@/components/ui";
+import { CtaBanner, PageHero, SectionHead, AccentCard } from "@/components/ui";
+import { getContent } from "@/lib/content-store";
 
 export const metadata: Metadata = {
   title: "About Us",
@@ -11,32 +12,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/about" },
 };
 
-const mv = [
-  { ic: "🎯", tint: "tint-purple", h: "Our Mission", p: "To provide a safe, loving and stimulating environment where every child feels valued, secure and inspired to explore, learn and grow at their own pace." },
-  { ic: "👁️", tint: "tint-green", h: "Our Vision", p: "To be Yaoundé's most trusted daycare — nurturing confident, kind and curious children who are ready for a bright future." },
-  { ic: "🤝", tint: "tint-yellow", h: "Our Promise", p: "Warm, professional care you can count on, clear communication with parents, and a joyful space your child will love coming back to." },
-];
+export default async function AboutPage() {
+  const { about } = await getContent();
 
-const values = [
-  { ic: "❤️", tint: "tint-coral", h: "Love & Warmth", p: "Every child is treated with genuine affection and patience." },
-  { ic: "🛡️", tint: "tint-purple", h: "Safety First", p: "A secure, clean and closely supervised environment at all times." },
-  { ic: "🌱", tint: "tint-green", h: "Growth", p: "Play-based learning that grows social, emotional and cognitive skills." },
-  { ic: "🤗", tint: "tint-sky", h: "Respect", p: "We honour each child's pace, personality and unique needs." },
-];
-
-const facility = [
-  { ic: "🛏️", tint: "tint-purple", h: "Sleeping & Rest", p: "A calm, dedicated space with comfortable bedding for naps and quiet time." },
-  { ic: "🍽️", tint: "tint-green", h: "Dining Area", p: "Clean dining space where nutritious meals and snacks are served daily." },
-  { ic: "🧸", tint: "tint-yellow", h: "Indoor Play", p: "Safe, age-appropriate toys, books and learning corners for every stage." },
-  { ic: "🌳", tint: "tint-sky", h: "Enclosed Veranda & Yard", p: "A secure grass yard and veranda for fresh-air play and outdoor discovery." },
-];
-
-export default function AboutPage() {
   return (
     <>
-      <PageHero crumb="About" title={<>Caring for Little Hearts &amp; <span className="text-brand">Curious Minds</span></>}>
-        Get to know the people, values and warm environment behind Granny&apos;s Daycare Center in Yaoundé.
-      </PageHero>
+      <PageHero crumb="About" title={about.title}>{about.intro}</PageHero>
 
       {/* STORY */}
       <section className="section bg-cream">
@@ -48,21 +29,13 @@ export default function AboutPage() {
           </FadeIn>
           <FadeIn direction="left">
             <span className="eyebrow mb-3">Our story</span>
-            <h2 className="text-3xl font-extrabold">A Home Away From Home in Shell Obili</h2>
-            <p className="mt-3 text-ink-soft">
-              Granny&apos;s Daycare Center is located in a secure, gated apartment in Shell Obili, Yaoundé, complete with a
-              toilet, kitchen, office, and a spacious hall with an enclosed veranda and grass yard. The hall includes
-              sleeping, storage, dining, indoor play and study areas for children&apos;s comfort daily.
-            </p>
-            <p className="mt-3 text-ink-soft">
-              What began as one grandmother&apos;s love for children has grown into a trusted center where families across
-              Yaoundé feel confident leaving their little ones. Every corner is designed to feel warm, safe and full of joy.
-            </p>
+            <h2 className="text-3xl font-extrabold">{about.storyTitle}</h2>
+            {about.storyParagraphs.map((p) => (
+              <p key={p} className="mt-3 text-ink-soft">{p}</p>
+            ))}
             <ul className="my-5 space-y-2">
-              {["Secure, gated premises with dedicated indoor & outdoor spaces", "Small groups with caring, attentive supervision", "Nutritious meals and a cozy rest area"].map((x) => (
-                <li key={x} className="relative pl-8 text-ink-soft before:absolute before:left-0 before:top-0.5 before:grid before:h-5 before:w-5 before:place-items-center before:rounded-full before:bg-brand-soft before:text-xs before:font-bold before:text-brand before:content-['✓']">
-                  {x}
-                </li>
+              {about.storyBullets.map((x) => (
+                <li key={x} className="relative pl-7 text-ink-soft before:absolute before:left-0 before:top-2 before:h-2.5 before:w-2.5 before:rounded-full before:bg-brand before:content-['']">{x}</li>
               ))}
             </ul>
             <Link href="/contact" className="btn">Visit Us</Link>
@@ -74,14 +47,8 @@ export default function AboutPage() {
       <section className="section bg-gradient-to-b from-white to-brand-tint">
         <div className="container-x">
           <FadeInStagger className="grid gap-6 md:grid-cols-3">
-            {mv.map((m) => (
-              <FadeInItem key={m.h}>
-                <div className="card card-hover h-full">
-                  <span className={`icon-chip ${m.tint} mb-4 h-14 w-14`}>{m.ic}</span>
-                  <h3 className="text-lg font-bold">{m.h}</h3>
-                  <p className="mt-1 text-sm text-ink-soft">{m.p}</p>
-                </div>
-              </FadeInItem>
+            {about.mv.map((m) => (
+              <FadeInItem key={m.title}><AccentCard title={m.title} text={m.text} /></FadeInItem>
             ))}
           </FadeInStagger>
         </div>
@@ -94,14 +61,8 @@ export default function AboutPage() {
             The principles that guide how we care for your child every single day.
           </SectionHead>
           <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {values.map((v) => (
-              <FadeInItem key={v.h}>
-                <div className="card h-full text-center">
-                  <span className={`icon-chip ${v.tint} mx-auto mb-4 h-14 w-14`}>{v.ic}</span>
-                  <h3 className="text-lg font-bold">{v.h}</h3>
-                  <p className="mt-1 text-sm text-ink-soft">{v.p}</p>
-                </div>
-              </FadeInItem>
+            {about.values.map((v) => (
+              <FadeInItem key={v.title}><AccentCard title={v.title} text={v.text} center /></FadeInItem>
             ))}
           </FadeInStagger>
         </div>
@@ -114,41 +75,27 @@ export default function AboutPage() {
             Join thousands of families who are discovering the sense of learning from free play — anything is possible.
           </SectionHead>
           <FadeInStagger className="grid gap-6 sm:grid-cols-2">
-            {facility.map((f) => (
-              <FadeInItem key={f.h}>
-                <div className="card card-hover flex h-full items-start gap-4">
-                  <span className={`icon-chip ${f.tint} h-12 w-12 flex-none`}>{f.ic}</span>
-                  <div>
-                    <h3 className="font-bold">{f.h}</h3>
-                    <p className="mt-1 text-sm text-ink-soft">{f.p}</p>
-                  </div>
-                </div>
-              </FadeInItem>
+            {about.facility.map((f) => (
+              <FadeInItem key={f.title}><AccentCard title={f.title} text={f.text} /></FadeInItem>
             ))}
           </FadeInStagger>
         </div>
       </section>
 
-      {/* NEW: OUR JOURNEY */}
+      {/* OUR JOURNEY */}
       <section className="section bg-cream">
         <div className="container-x">
           <SectionHead eyebrow="Our journey" title={<>Growing With <span className="text-brand">Our Community</span></>}>
             From a single grandmother&apos;s love for children to a trusted name in Yaoundé childcare.
           </SectionHead>
           <FadeInStagger className="mx-auto max-w-3xl space-y-4">
-            {[
-              { y: "The beginning", h: "A grandmother's love", p: "Granny's started as a warm home welcoming a handful of neighbourhood children with open arms." },
-              { y: "Growing up", h: "A real learning space", p: "We added a play-based programme, learning corners and a dedicated, caring team." },
-              { y: "Today", h: "A trusted centre", p: "Families across Yaoundé trust us daily with safe, loving, developmental childcare." },
-              { y: "Tomorrow", h: "Always improving", p: "We keep enriching our spaces, activities and care so every child can thrive." },
-            ].map((s, i) => (
-              <FadeInItem key={s.y}>
+            {about.journey.map((s, i) => (
+              <FadeInItem key={s.title}>
                 <div className="card flex items-start gap-4">
                   <span className="grid h-10 w-10 flex-none place-items-center rounded-full bg-brand text-sm font-bold text-white">{i + 1}</span>
                   <div>
-                    <span className="text-xs font-semibold uppercase tracking-wide text-brand">{s.y}</span>
-                    <h3 className="font-bold">{s.h}</h3>
-                    <p className="mt-0.5 text-sm text-ink-soft">{s.p}</p>
+                    <h3 className="font-bold">{s.title}</h3>
+                    <p className="mt-0.5 text-sm text-ink-soft">{s.text}</p>
                   </div>
                 </div>
               </FadeInItem>
@@ -157,24 +104,16 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* NEW: PARENT PARTNERSHIP */}
+      {/* PARENT PARTNERSHIP */}
       <section className="section bg-gradient-to-b from-white to-brand-tint">
         <div className="container-x grid items-center gap-12 md:grid-cols-2">
           <FadeIn direction="right">
             <span className="eyebrow mb-3">Working together</span>
-            <h2 className="text-3xl font-extrabold">A True Partnership With <span className="text-brand">Parents</span></h2>
-            <p className="mt-3 text-ink-soft">
-              You know your child best. We keep you close to their day with open, honest communication so you always feel
-              connected — even when you&apos;re apart.
-            </p>
+            <h2 className="text-3xl font-extrabold">{about.partnership.title}</h2>
+            <p className="mt-3 text-ink-soft">{about.partnership.text}</p>
             <ul className="my-5 space-y-3">
-              {[
-                "Friendly daily updates on how your child is doing",
-                "An open-door policy — visit and chat any time",
-                "Regular check-ins on progress and milestones",
-                "We listen, adapt and care around your family's needs",
-              ].map((x) => (
-                <li key={x} className="relative pl-8 text-ink-soft before:absolute before:left-0 before:top-0.5 before:grid before:h-5 before:w-5 before:place-items-center before:rounded-full before:bg-brand-soft before:text-xs before:font-bold before:text-brand before:content-['✓']">{x}</li>
+              {about.partnership.bullets.map((x) => (
+                <li key={x} className="relative pl-7 text-ink-soft before:absolute before:left-0 before:top-2 before:h-2.5 before:w-2.5 before:rounded-full before:bg-brand before:content-['']">{x}</li>
               ))}
             </ul>
             <Link href="/contact" className="btn">Talk to Us</Link>

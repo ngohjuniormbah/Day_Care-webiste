@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
-import { programSeed } from "@/lib/programs";
+import { getContent } from "@/lib/content-store";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function GET() {
-  return NextResponse.json(programSeed);
+  const { program } = await getContent();
+  return NextResponse.json(program.programs);
 }

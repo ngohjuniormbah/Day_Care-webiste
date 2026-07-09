@@ -23,17 +23,28 @@ function tmpFile() {
   return join(tmpdir(), "grannys-daycare-content.json");
 }
 
+function isObj(v: unknown): v is Record<string, unknown> {
+  return !!v && typeof v === "object" && !Array.isArray(v);
+}
+
+// Deep-merge stored content onto the defaults: objects merge recursively,
+// arrays and primitives replace. This keeps new default fields alive even if an
+// older saved payload doesn't have them yet.
+export function deepMerge<T>(base: T, override: unknown): T {
+  if (!isObj(base) || !isObj(override)) {
+    return (override === undefined ? base : (override as T));
+  }
+  const out: Record<string, unknown> = { ...base };
+  for (const key of Object.keys(base as Record<string, unknown>)) {
+    if (key in override) {
+      out[key] = deepMerge((base as Record<string, unknown>)[key], override[key]);
+    }
+  }
+  return out as T;
+}
+
 function merge(stored: Partial<SiteContent>): SiteContent {
-  // Shallow-merge each top-level key so new default fields survive old saves.
-  return {
-    banner: { ...defaultContent.banner, ...stored.banner },
-    site: { ...defaultContent.site, ...stored.site },
-    hero: { ...defaultContent.hero, ...stored.hero },
-    plans: stored.plans ?? defaultContent.plans,
-    programs: stored.programs ?? defaultContent.programs,
-    testimonials: stored.testimonials ?? defaultContent.testimonials,
-    faqs: stored.faqs ?? defaultContent.faqs,
-  };
+  return deepMerge(defaultContent, stored);
 }
 
 export async function getContent(): Promise<SiteContent> {

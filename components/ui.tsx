@@ -2,6 +2,25 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { FadeIn } from "@/components/motion/FadeIn";
 
+/** Clean, icon-free content card with a subtle brand accent bar. */
+export function AccentCard({
+  title,
+  text,
+  center = false,
+}: {
+  title: string;
+  text: string;
+  center?: boolean;
+}) {
+  return (
+    <div className={`card card-hover h-full ${center ? "text-center" : ""}`}>
+      <span className={`mb-4 block h-1 w-10 rounded-full bg-brand ${center ? "mx-auto" : ""}`} />
+      <h3 className="text-lg font-bold">{title}</h3>
+      <p className="mt-1 text-sm text-ink-soft">{text}</p>
+    </div>
+  );
+}
+
 export function PageHero({
   crumb,
   title,

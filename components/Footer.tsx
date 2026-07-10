@@ -30,7 +30,7 @@ const columns: { heading: string; links: { label: string; href: string }[] }[] =
       { label: "Contact Us", href: "/contact" },
       { label: "Enrollment Info", href: "/contact" },
       { label: "Parent Support", href: "/contact" },
-      { label: "FAQs", href: "/#faq" },
+      { label: "FAQs", href: "/contact" },
     ],
   },
 ];

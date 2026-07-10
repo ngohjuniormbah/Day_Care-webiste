@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { FadeIn, FadeInStagger, FadeInItem } from "@/components/motion/FadeIn";
 import { CtaBanner, SectionHead, AccentCard, Colorful } from "@/components/ui";
+import { ApproachOrbit } from "@/components/ApproachOrbit";
 import { Faq } from "@/components/Faq";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { getContent } from "@/lib/content-store";
@@ -83,16 +84,12 @@ export default async function Home() {
       </section>
 
       {/* LEARNING APPROACH */}
-      <section className="section bg-gradient-to-b from-white to-brand-tint">
+      <section className="section bg-white">
         <div className="container-x">
           <SectionHead eyebrow="Our approach" title={<Colorful text="Our Unique Learning Approach for Young Minds" map={{ Unique: "text-brand", Approach: "text-accent-lime", Minds: "text-accent-lime" }} />}>
-            A caring approach and thoughtfully designed programmes set us apart, with small age steps that ensure precious attention for every child.
+            Our caring approach and thoughtfully designed programs set us apart, with small class sizes that ensure personal attention for every child.
           </SectionHead>
-          <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {home.approach.map((a) => (
-              <FadeInItem key={a.title}><AccentCard title={a.title} text={a.text} /></FadeInItem>
-            ))}
-          </FadeInStagger>
+          <FadeIn><ApproachOrbit /></FadeIn>
         </div>
       </section>
 
@@ -195,7 +192,7 @@ export default async function Home() {
           </FadeIn>
           <FadeIn direction="left">
             <div className="relative aspect-[5/4] overflow-hidden rounded-xl2 bg-brand-soft shadow-soft">
-              <Image src="/images/about-story.jpg" alt="Granny's Daycare Center premises in Shell Obili" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
+              <Image src="/images/about-story.jpg" alt="Granny's Daycare Center premises in Shell Nsimeyong" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
             </div>
             <div className="mt-5 grid grid-cols-3 gap-3 text-center">
               {[["100%", "Safe & secure"], ["1:5", "Care ratio"], ["5.0", "Parent rating"]].map(([n, l]) => (
@@ -323,7 +320,7 @@ export default async function Home() {
 
       <CtaBanner
         title="Ready to Give Your Child the Best Start?"
-        text="Book a visit to Granny's Daycare Center in Shell Obili, Yaoundé and see the warm, joyful space where your child will learn, play and grow."
+        text="Book a visit to Granny's Daycare Center in Shell Nsimeyong, Yaoundé and see the warm, joyful space where your child will learn, play and grow."
       />
     </>
   );

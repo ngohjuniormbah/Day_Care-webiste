@@ -19,7 +19,7 @@ const jsonLd = {
   email: site.email,
   address: {
     "@type": "PostalAddress",
-    streetAddress: "Shell Obili",
+    streetAddress: "Shell Nsimeyong",
     addressLocality: site.locality,
     addressCountry: site.country,
   },

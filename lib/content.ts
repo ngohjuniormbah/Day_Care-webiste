@@ -84,14 +84,14 @@ export const defaultContent: SiteContent = {
   site: {
     name: "Granny's Daycare Center",
     tagline: "Nurturing young minds for a brighter future",
-    address: "Shell Obili, Yaoundé, Cameroon",
+    address: "Shell Nsimeyong, Yaoundé, Cameroon",
     phones: ["+237 677 172 979", "+237 654 448 959"],
     email: "grannysdaycare@gmail.com",
     hours: "Monday – Friday · 07:00 – 18:00",
     mapEmbed:
-      "https://www.google.com/maps?q=Shell%20Obili%2C%20Yaound%C3%A9%2C%20Cameroon&z=15&output=embed",
+      "https://www.google.com/maps?q=Shell%20Nsimeyong%2C%20Yaound%C3%A9%2C%20Cameroon&z=15&output=embed",
     mapLink:
-      "https://www.google.com/maps/search/?api=1&query=Shell+Obili+Yaound%C3%A9+Cameroon",
+      "https://www.google.com/maps/search/?api=1&query=Shell+Nsimeyong+Yaound%C3%A9+Cameroon",
   },
   faqs: [
     { q: "What ages do you care for?", a: "We welcome children from 0 to 5 years across our infant, toddler and preschool programmes, plus after-school care for older children." },
@@ -159,7 +159,7 @@ export const defaultContent: SiteContent = {
       { name: "Aunty Brenda", role: "Infant Care Specialist" },
     ],
     testimonials: [
-      { av: "A", n: "Aïcha N.", r: "Parent, Obili", t: "Granny's Daycare feels like a second home for my daughter. The staff are warm, attentive and truly caring. I never worry when she's here." },
+      { av: "A", n: "Aïcha N.", r: "Parent, Nsimeyong", t: "Granny's Daycare feels like a second home for my daughter. The staff are warm, attentive and truly caring. I never worry when she's here." },
       { av: "P", n: "Paul M.", r: "Parent, Yaoundé", t: "The learning programme is wonderful. My son has grown so confident and comes home excited to share what he learned each day." },
       { av: "S", n: "Sandrine K.", r: "Parent, Efoulan", t: "Clean, safe and full of love. The flexible hours are perfect for our family. I recommend Granny's to every parent I know." },
     ],
@@ -172,9 +172,9 @@ export const defaultContent: SiteContent = {
   about: {
     title: "Caring for Little Hearts & Curious Minds",
     intro: "Get to know the people, values and warm environment behind Granny's Daycare Center in Yaoundé.",
-    storyTitle: "A Home Away From Home in Shell Obili",
+    storyTitle: "A Home Away From Home in Shell Nsimeyong",
     storyParagraphs: [
-      "Granny's Daycare Center is located in a secure, gated apartment in Shell Obili, Yaoundé, complete with a toilet, kitchen, office, and a spacious hall with an enclosed veranda and grass yard. The hall includes sleeping, storage, dining, indoor play and study areas for children's comfort daily.",
+      "Granny's Daycare Center is located in a secure, gated apartment in Shell Nsimeyong, Yaoundé, complete with a toilet, kitchen, office, and a spacious hall with an enclosed veranda and grass yard. The hall includes sleeping, storage, dining, indoor play and study areas for children's comfort daily.",
       "What began as one grandmother's love for children has grown into a trusted center where families across Yaoundé feel confident leaving their little ones. Every corner is designed to feel warm, safe and full of joy.",
     ],
     storyBullets: [
@@ -275,7 +275,7 @@ export const defaultContent: SiteContent = {
       { day: "Sunday & public holidays", time: "Closed" },
     ],
     findUs: [
-      "We're located near Shell Obili, easy to reach from across Yaoundé.",
+      "We're located near Shell Nsimeyong, easy to reach from across Yaoundé.",
       "Look out for our secure, gated premises with the Granny's sign.",
       "Free, safe drop-off and pick-up right at the entrance.",
       "Call us on arrival and a caregiver will welcome you in.",

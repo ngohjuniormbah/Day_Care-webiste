@@ -7,7 +7,7 @@ import { getContent } from "@/lib/content-store";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "A look inside Granny's Daycare Center in Shell Obili, Yaoundé — moments of learning, play and growth captured in our warm, safe and loving environment.",
+    "A look inside Granny's Daycare Center in Shell Nsimeyong, Yaoundé — moments of learning, play and growth captured in our warm, safe and loving environment.",
   alternates: { canonical: "/gallery" },
 };
 
@@ -32,7 +32,7 @@ export default async function GalleryPage() {
       <section className="section bg-gradient-to-b from-white to-brand-tint">
         <div className="container-x">
           <SectionHead eyebrow="Photo gallery" title={<>Moments of <span className="text-brand">Learning</span>, Play &amp; Growth</>}>
-            Snapshots from a typical day at Granny&apos;s Daycare Center in Shell Obili, Yaoundé.
+            Snapshots from a typical day at Granny&apos;s Daycare Center in Shell Nsimeyong, Yaoundé.
           </SectionHead>
           <FadeInStagger gap={0.08} className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {gallery.photos.map((p) => (

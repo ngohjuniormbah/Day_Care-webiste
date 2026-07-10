@@ -8,7 +8,7 @@ import { getContent } from "@/lib/content-store";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "Learn about Granny's Daycare Center in Shell Obili, Yaoundé — our story, mission, values and the caring team who help children learn, play and grow.",
+    "Learn about Granny's Daycare Center in Shell Nsimeyong, Yaoundé — our story, mission, values and the caring team who help children learn, play and grow.",
   alternates: { canonical: "/about" },
 };
 
@@ -128,7 +128,7 @@ export default async function AboutPage() {
 
       <CtaBanner
         title="Come See It for Yourself"
-        text="We'd love to show you around and answer your questions. Book a friendly tour of our center in Shell Obili, Yaoundé."
+        text="We'd love to show you around and answer your questions. Book a friendly tour of our center in Shell Nsimeyong, Yaoundé."
       />
     </>
   );

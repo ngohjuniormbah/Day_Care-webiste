@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { nav, site } from "@/lib/site";
+import { nav } from "@/lib/site";
+import { Logo } from "@/components/Logo";
 
 export function Header() {
   const pathname = usePathname();
@@ -28,15 +28,7 @@ export function Header() {
       }`}
     >
       <nav className="container-x flex items-center justify-between py-3" aria-label="Main navigation">
-        <Link href="/" className="flex items-center gap-2.5">
-          <Image src="/images/favicon.svg" alt={`${site.name} logo`} width={42} height={42} priority />
-          <span className="leading-tight">
-            <span className="block text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-ink-muted">
-              Granny&apos;s
-            </span>
-            <span className="block font-bold text-ink">Daycare Center</span>
-          </span>
-        </Link>
+        <Logo />
 
         {/* Desktop nav */}
         <ul className="hidden items-center gap-1 md:flex">
@@ -46,8 +38,8 @@ export function Header() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
-                    active ? "bg-brand-soft font-semibold text-brand" : "text-ink-soft hover:text-brand"
+                  className={`rounded-full px-3.5 py-2 text-[0.95rem] font-medium transition-colors ${
+                    active ? "font-semibold text-accent-orange" : "text-ink hover:text-brand"
                   }`}
                 >
                   {item.label}
@@ -59,7 +51,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <Link href="/contact" className="btn hidden sm:inline-flex">
-            Get in Touch
+            Get In Touch
           </Link>
           <button
             className="grid h-10 w-10 place-items-center rounded-lg md:hidden"

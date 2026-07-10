@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "daycare Yaoundé",
     "childcare Cameroon",
     "garderie Yaoundé",
-    "preschool Obili",
+    "preschool Nsimeyong",
     "kindergarten Yaoundé",
     "Granny's Daycare Center",
   ],

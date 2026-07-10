@@ -30,7 +30,7 @@ const columns: { heading: string; links: { label: string; href: string }[] }[] =
       { label: "Contact Us", href: "/contact" },
       { label: "Enrollment Info", href: "/contact" },
       { label: "Parent Support", href: "/contact" },
-      { label: "FAQs", href: "/#faq" },
+      { label: "FAQs", href: "/contact" },
     ],
   },
 ];
@@ -107,7 +107,7 @@ export function Footer({ info }: { info?: Info }) {
       <div className="border-t border-white/40">
         <div className="container-x flex flex-col items-center gap-3 py-5 text-sm text-ink/80 md:flex-row md:justify-between">
           <span>All rights reserved © {site.name} · {new Date().getFullYear()}</span>
-          <span className="font-semibold text-ink">{site.address}</span>
+          <span className="font-semibold text-ink">Shell Nsimeyong, Road going to Effoulan</span>
           <span className="flex gap-4">
             <Link href="/about" className="hover:text-white">Terms of Use</Link>
             <Link href="/about" className="hover:text-white">Privacy Policy</Link>

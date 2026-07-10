@@ -1,10 +1,50 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FadeIn, FadeInStagger, FadeInItem } from "@/components/motion/FadeIn";
-import { CtaBanner, SectionHead, AccentCard, Colorful } from "@/components/ui";
-import { Faq } from "@/components/Faq";
-import { NewsletterForm } from "@/components/NewsletterForm";
+import { SectionHead, Colorful } from "@/components/ui";
+import { ApproachOrbit } from "@/components/ApproachOrbit";
+import { ProgramTabs } from "@/components/ProgramTabs";
+import { DetailAccordion } from "@/components/DetailAccordion";
+import { HomeContactForm } from "@/components/HomeContactForm";
+import { ReadyCta } from "@/components/ReadyCta";
 import { getContent } from "@/lib/content-store";
+import { site } from "@/lib/site";
+
+// Two care highlight cards shown just under the hero.
+const heroCards = [
+  {
+    icon: "🏠",
+    title: "Full Year Childcare — Open All Year Round",
+    text: "Safe, reliable care for babies, toddlers, and young children throughout the school year with a warm environment, caring staff, daily supervision, and fun learning activities.",
+  },
+  {
+    icon: "🧺",
+    title: "Flexible Care Plans — Hourly, Daily & Monthly Options",
+    text: "Affordable childcare plans designed for every family's needs, with convenient schedules for working parents including short stays, full days, weekly care, and monthly enrollment options.",
+  },
+];
+
+// Flexible care plans (Full Day / Half Day / Weekly).
+const carePlans = [
+  { name: "Full Day", img: "/images/gallery/g1.jpg", featured: true, cols: [["Time In", "07:00 AM"], ["Seats", "10"], ["Time out", "1–2 years"]] },
+  { name: "Half Day", img: "/images/gallery/g2.jpg", featured: false, cols: [["Time", "09:00 AM"], ["Seats", "13"], ["Age", "3–4 years"]] },
+  { name: "Weekly", img: "/images/gallery/g3.jpg", featured: false, cols: [["Day In", "Monday"], ["Seats", "07"], ["Day out", "Friday"]] },
+];
+
+// Gallery highlight cards.
+const galleryCards = [
+  { img: "/images/care.jpg", title: "Secure & Peaceful Environment", text: "Located in a fully fenced and gated apartment building, ensuring maximum safety and protection for every child." },
+  { img: "/images/classroom.jpg", title: "Essential Care Facilities", text: "Equipped with a clean toilet, functional kitchen, and a dedicated office space for smooth daily operations." },
+  { img: "/images/facility.jpg", title: "Enclosed Veranda Activities", text: "A wide, protected veranda designed for group activities, creativity sessions, and supervised fun." },
+  { img: "/images/playground.jpg", title: "Spacious Learning & Play Hall", text: "A large hall thoughtfully organized into sleeping, learning, and play zones to support balanced child development." },
+];
+
+// Journal / blog cards.
+const journalPosts = [
+  { img: "/images/journal1.jpg", title: "Developing independence in children through simple self-care routines", text: "Children learn to tidy up, wash hands, organize belongings, and complete small tasks on their own." },
+  { img: "/images/journal2.jpg", title: "Building confidence in young children through guided play activities", text: "Children gain self-esteem as they explore new games, solve simple challenges, and celebrate small achievements each day." },
+  { img: "/images/journal3.jpg", title: "Encouraging kindness and sharing through group learning experiences", text: "We teach children how to care for others, share toys, and work together in a friendly environment." },
+];
 
 // Petals for the hero photo cluster — each teardrop points toward the centre.
 const petals = [
@@ -15,7 +55,7 @@ const petals = [
 ];
 
 export default async function Home() {
-  const { home, faqs } = await getContent();
+  const { home } = await getContent();
   const { hero } = home;
 
   return (
@@ -82,17 +122,33 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* HERO CARDS */}
+      <section className="bg-peach/40 pb-16">
+        <div className="container-x grid gap-6 md:grid-cols-2">
+          {heroCards.map((c) => (
+            <FadeIn key={c.title} className="h-full">
+              <div className="flex h-full items-start gap-4 rounded-[1.75rem] bg-white p-6 shadow-card">
+                <span className="grid h-14 w-14 flex-none place-items-center rounded-2xl bg-brand-soft text-2xl">{c.icon}</span>
+                <div>
+                  <h3 className="font-bold text-ink">{c.title}</h3>
+                  <p className="mt-1.5 text-sm text-ink-soft">{c.text}</p>
+                  <Link href="/program" className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-accent-orange">
+                    Explore Activities <span aria-hidden="true">↗</span>
+                  </Link>
+                </div>
+              </div>
+            </FadeIn>
+          ))}
+        </div>
+      </section>
+
       {/* LEARNING APPROACH */}
-      <section className="section bg-gradient-to-b from-white to-brand-tint">
+      <section className="section bg-white">
         <div className="container-x">
           <SectionHead eyebrow="Our approach" title={<Colorful text="Our Unique Learning Approach for Young Minds" map={{ Unique: "text-brand", Approach: "text-accent-lime", Minds: "text-accent-lime" }} />}>
-            A caring approach and thoughtfully designed programmes set us apart, with small age steps that ensure precious attention for every child.
+            Our caring approach and thoughtfully designed programs set us apart, with small class sizes that ensure personal attention for every child.
           </SectionHead>
-          <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {home.approach.map((a) => (
-              <FadeInItem key={a.title}><AccentCard title={a.title} text={a.text} /></FadeInItem>
-            ))}
-          </FadeInStagger>
+          <FadeIn><ApproachOrbit /></FadeIn>
         </div>
       </section>
 
@@ -100,204 +156,145 @@ export default async function Home() {
       <section className="section bg-cream">
         <div className="container-x">
           <SectionHead eyebrow="Flexible care" title={<Colorful text="Flexible Care Options — Easy Drop-Off & Pick-Up for Every Family" map={{ Flexible: "text-brand", Options: "text-accent-lime", "Drop-Off": "text-brand", "Every Family": "text-accent-lime" }} />}>
-            Our plans are carefully structured to support children of every learning ability, based on their developmental stage.
+            Our programs are carefully structured to support children&apos;s growth, learning ability, and confidence based on their developmental stage.
           </SectionHead>
           <FadeInStagger className="grid gap-8 md:grid-cols-3">
-            {home.plans.map((pl) => (
+            {carePlans.map((pl) => (
               <FadeInItem key={pl.name}>
-                <div className={`card card-hover relative h-full text-center ${pl.featured ? "ring-2 ring-brand" : ""}`}>
-                  {pl.featured && (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand px-3 py-1 text-xs font-semibold text-white">Most popular</span>
-                  )}
-                  <h3 className="text-2xl font-bold">{pl.name}</h3>
-                  <div className="my-2 text-3xl font-bold text-brand">
-                    {pl.price}<span className="ml-1 text-sm font-medium text-ink-muted">{pl.unit}</span>
+                <div className={`card card-hover h-full text-center ${pl.featured ? "ring-2 ring-brand" : ""}`}>
+                  <div className="relative mx-auto h-40 w-40 overflow-hidden rounded-full bg-brand-soft shadow-card">
+                    <Image src={pl.img} alt={pl.name} fill sizes="160px" className="object-cover" />
                   </div>
+                  <h3 className="mt-5 text-2xl font-bold">{pl.name}</h3>
                   <div className="my-5 flex justify-around border-y border-brand-soft py-4">
-                    <div><div className="text-xs text-ink-muted">Hours / Days</div><strong>{pl.hours}</strong></div>
-                    <div><div className="text-xs text-ink-muted">Ages</div><strong>{pl.ages}</strong></div>
+                    {pl.cols.map(([l, v], i) => (
+                      <div key={l} className={i === 2 ? "font-bold" : ""}>
+                        <div className="text-xs text-ink-muted">{l}</div>
+                        <strong>{v}</strong>
+                      </div>
+                    ))}
                   </div>
-                  <Link href="/contact" className="btn w-full">Book Now</Link>
+                  <Link href="/contact" className={`btn w-full ${pl.featured ? "" : "btn-ghost"}`}>Book Now</Link>
                 </div>
               </FadeInItem>
             ))}
           </FadeInStagger>
-        </div>
-      </section>
-
-      {/* DAILY RHYTHM */}
-      <section className="section bg-gradient-to-b from-white to-brand-tint">
-        <div className="container-x">
-          <SectionHead eyebrow="Daily rhythm" title={<>A Typical Day at <span className="text-brand">Granny&apos;s</span></>}>
-            A gentle, predictable routine that helps children feel safe, settled and ready to learn and play.
-          </SectionHead>
-          <FadeInStagger className="mx-auto grid max-w-4xl gap-4 sm:grid-cols-2">
-            {home.schedule.map((s) => (
-              <FadeInItem key={s.time}>
-                <div className="card flex items-start gap-4">
-                  <span className="mt-1 h-2.5 w-2.5 flex-none rounded-full bg-brand" />
-                  <div>
-                    <span className="text-xs font-semibold uppercase tracking-wide text-brand">{s.time}</span>
-                    <h3 className="font-bold">{s.title}</h3>
-                    <p className="mt-0.5 text-sm text-ink-soft">{s.text}</p>
-                  </div>
-                </div>
-              </FadeInItem>
+          <div className="mt-8 flex justify-center gap-2">
+            {[0, 1, 2].map((d) => (
+              <span key={d} className={`h-2.5 rounded-full transition-all ${d === 0 ? "w-6 bg-brand" : "w-2.5 bg-brand/25"}`} />
             ))}
-          </FadeInStagger>
-        </div>
-      </section>
-
-      {/* PROGRAMS PREVIEW */}
-      <section className="section bg-cream">
-        <div className="container-x">
-          <SectionHead eyebrow="Programmes" title={<Colorful text="Our Amazing Programs" map={{ Amazing: "text-brand" }} />}>
-            Our caring approach and thoughtfully designed programmes set us apart, with small age steps that ensure precious attention for every child.
-          </SectionHead>
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <FadeIn direction="right">
-              <div className="relative aspect-[5/4] overflow-hidden rounded-xl2 bg-brand-soft shadow-soft">
-                <Image src="/images/classroom.jpg" alt="Toddlers exploring during a play-based learning session" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
-              </div>
-            </FadeIn>
-            <FadeIn direction="left">
-              <span className="mb-2 inline-block rounded-full bg-brand-soft px-3.5 py-1 text-xs font-semibold text-brand-dark">2 classes daily</span>
-              <h3 className="text-2xl font-bold">Learning Through Play</h3>
-              <p className="mt-2 text-ink-soft">
-                Our infant &amp; toddler programme is designed to provide loving care, comfort and a safe, warm space for
-                the little ones — right from the start. Through gentle play, sensory activities and a climate of respect,
-                we help children safely explore their world while soaking in trust, comfort and confidence.
-              </p>
-              <ul className="my-4 grid grid-cols-2 gap-y-2 text-sm text-ink-soft">
-                {["Fun Free Days", "Creative learning", "Part-Time Care", "Age-based groups", "Overnight Naps", "Creative play"].map((x) => (
-                  <li key={x} className="relative pl-5 before:absolute before:left-0 before:top-2 before:h-1.5 before:w-1.5 before:rounded-full before:bg-brand before:content-['']">{x}</li>
-                ))}
-              </ul>
-              <Link href="/program" className="btn">Explore Programs</Link>
-            </FadeIn>
           </div>
         </div>
       </section>
 
-      {/* WHY PARENTS CHOOSE US */}
-      <section className="section bg-gradient-to-b from-white to-brand-tint">
-        <div className="container-x grid items-center gap-12 md:grid-cols-2">
-          <FadeIn direction="right">
-            <span className="eyebrow mb-3">Why families trust us</span>
-            <h2 className="text-3xl font-extrabold">{home.why.title}</h2>
-            <p className="mt-3 text-ink-soft">{home.why.text}</p>
-            <ul className="my-5 space-y-3">
-              {home.why.bullets.map((x) => (
-                <li key={x} className="relative pl-7 text-ink-soft before:absolute before:left-0 before:top-2 before:h-2.5 before:w-2.5 before:rounded-full before:bg-brand before:content-['']">{x}</li>
-              ))}
-            </ul>
-            <Link href="/about" className="btn">Learn More About Us</Link>
-          </FadeIn>
-          <FadeIn direction="left">
-            <div className="relative aspect-[5/4] overflow-hidden rounded-xl2 bg-brand-soft shadow-soft">
-              <Image src="/images/about-story.jpg" alt="Granny's Daycare Center premises in Shell Obili" fill sizes="(max-width: 768px) 90vw, 45vw" className="object-cover" />
-            </div>
-            <div className="mt-5 grid grid-cols-3 gap-3 text-center">
-              {[["100%", "Safe & secure"], ["1:5", "Care ratio"], ["5.0", "Parent rating"]].map(([n, l]) => (
-                <div key={l} className="card py-4">
-                  <div className="text-xl font-bold text-brand">{n}</div>
-                  <div className="text-xs text-ink-muted">{l}</div>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* HEALTH & SAFETY */}
-      <section className="section bg-cream">
-        <div className="container-x">
-          <SectionHead eyebrow="Health & safety" title={<>Your Child&apos;s Safety Comes <span className="text-brand">First</span></>}>
-            Peace of mind for parents — every detail is designed to keep your little one safe, healthy and happy.
-          </SectionHead>
-          <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {home.safety.map((s) => (
-              <FadeInItem key={s.title}><AccentCard title={s.title} text={s.text} center /></FadeInItem>
-            ))}
-          </FadeInStagger>
-        </div>
-      </section>
-
-      {/* MEET THE TEAM */}
+      {/* PROGRAMS */}
       <section className="section bg-gradient-to-b from-white to-brand-tint">
         <div className="container-x">
-          <SectionHead eyebrow="Our team" title={<>Meet Our <span className="text-brand">Caring Team</span></>}>
-            Warm, patient and qualified educators who love what they do — and love your children.
+          <SectionHead eyebrow="Programmes" title={<Colorful text="Our Amazing Programs" map={{ Amazing: "text-brand" }} />}>
+            Our caring approach and thoughtfully designed programs set us apart, with small class sizes that ensure personal attention for every child.
           </SectionHead>
-          <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {home.team.map((m) => (
-              <FadeInItem key={m.name}>
-                <div className="card card-hover h-full text-center">
-                  <span className="mx-auto mb-4 grid h-20 w-20 place-items-center rounded-full bg-brand-soft text-2xl font-bold text-brand">
-                    {m.name.split(" ").map((w) => w[0]).slice(0, 2).join("")}
-                  </span>
-                  <h3 className="font-bold">{m.name}</h3>
-                  <p className="mt-0.5 text-sm text-brand">{m.role}</p>
-                </div>
-              </FadeInItem>
-            ))}
-          </FadeInStagger>
+          <FadeIn><ProgramTabs /></FadeIn>
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
+      {/* DETAILED DESCRIPTION */}
       <section className="section bg-cream">
         <div className="container-x">
-          <SectionHead eyebrow="Loved by families" title={<>What <span className="text-brand">Parents</span> Say</>} />
-          <FadeInStagger className="grid gap-6 md:grid-cols-3">
-            {home.testimonials.map((t) => (
-              <FadeInItem key={t.n}>
-                <div className="card h-full">
-                  <div className="mb-2 text-accent-yellow">★★★★★</div>
-                  <p className="italic text-ink-soft">&ldquo;{t.t}&rdquo;</p>
-                  <div className="mt-4 flex items-center gap-3">
-                    <span className="grid h-11 w-11 place-items-center rounded-full bg-brand-soft font-bold text-brand">{t.av}</span>
-                    <div>
-                      <strong className="block text-sm">{t.n}</strong>
-                      <span className="text-xs text-ink-muted">{t.r}</span>
-                    </div>
+          <SectionHead eyebrow="Who we are" title={<Colorful text="Detailed Description of Granny's Daycare Center" map={{ Detailed: "text-brand", "Granny's": "text-accent-lime", Center: "text-accent-lime" }} />}>
+            Join thousands of families who are discovering that when learning feels like play, anything is possible.
+          </SectionHead>
+          <div className="grid items-start gap-8 lg:grid-cols-2">
+            <FadeIn direction="right">
+              <div className="relative rounded-[2rem] bg-white p-8 shadow-soft">
+                <span className="absolute right-8 top-8 text-4xl text-accent-coral">&rdquo;</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-accent-yellow">★★★★★</span>
+                  <strong className="text-lg">5.0</strong>
+                  <span className="text-sm text-ink-muted">out of 5</span>
+                </div>
+                <p className="mt-5 text-lg font-semibold leading-relaxed text-ink">
+                  Granny&apos;s Daycare Center is located in a secure gated apartment with a toilet, kitchen, office,
+                  spacious hall, enclosed veranda, and grass yard. The hall includes sleeping, storage, dining, indoor
+                  play, and study areas for children&apos;s comfort daily.
+                </p>
+                <div className="mt-8 flex items-center justify-between">
+                  <div>
+                    <strong className="block">Kwenti Nancy</strong>
+                    <span className="text-sm text-ink-muted">Founder | Owner</span>
+                  </div>
+                  <div className="flex -space-x-3">
+                    {["/images/care.jpg", "/images/classroom.jpg"].map((s) => (
+                      <span key={s} className="relative h-12 w-16 overflow-hidden rounded-xl ring-2 ring-white">
+                        <Image src={s} alt="" fill sizes="64px" className="object-cover" />
+                      </span>
+                    ))}
                   </div>
                 </div>
-              </FadeInItem>
-            ))}
-          </FadeInStagger>
+              </div>
+              <div className="mt-6 flex justify-center gap-2">
+                {[0, 1, 2].map((d) => (
+                  <span key={d} className={`h-2.5 rounded-full ${d === 0 ? "w-6 bg-brand" : "w-2.5 bg-brand/25"}`} />
+                ))}
+              </div>
+            </FadeIn>
+            <FadeIn direction="left"><DetailAccordion /></FadeIn>
+          </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section id="faq" className="section scroll-mt-24 bg-gradient-to-b from-white to-brand-tint">
+      {/* GALLERY */}
+      <section className="section bg-peach/40">
         <div className="container-x">
-          <SectionHead eyebrow="Good to know" title={<Colorful text="Frequently Asked Questions" map={{ Questions: "text-brand" }} />}>
-            Everything you need to know before your child joins the Granny&apos;s family.
-          </SectionHead>
-          <FadeIn><Faq items={faqs} /></FadeIn>
+          <div className="mx-auto mb-12 max-w-3xl text-center">
+            <span className="eyebrow mb-4">📷 Our memories</span>
+            <h2 className="text-3xl font-extrabold sm:text-4xl">
+              <Colorful text="Granny's Daycare Center Gallery" map={{ "Granny's": "text-brand", Center: "text-brand", Gallery: "text-accent-lime" }} />
+            </h2>
+            <p className="mt-3 text-ink-soft">
+              A safe, warm, and thoughtfully designed early childhood environment where every child is nurtured, cared for, and guided through joyful learning experiences.
+            </p>
+          </div>
+          <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {galleryCards.map((g) => (
+              <FadeInItem key={g.title}>
+                <article className="card card-hover h-full overflow-hidden p-0">
+                  <div className="relative aspect-[4/3] bg-brand-soft">
+                    <Image src={g.img} alt={g.title} fill sizes="(max-width: 768px) 90vw, 22vw" className="object-cover" />
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-bold text-ink">{g.title}</h3>
+                    <p className="mt-1.5 text-sm text-ink-soft">{g.text}</p>
+                  </div>
+                </article>
+              </FadeInItem>
+            ))}
+          </FadeInStagger>
+          <div className="mt-10 text-center">
+            <Link href="/gallery" className="btn">View Full Gallery</Link>
+          </div>
         </div>
       </section>
 
       {/* JOURNAL */}
-      <section className="section bg-cream">
+      <section className="section bg-white">
         <div className="container-x">
           <SectionHead eyebrow="Our journal" title={<Colorful text="Moments of Learning, Play, and Growth" map={{ Moments: "text-brand", "and Growth": "text-accent-lime" }} />}>
             Stay updated with the latest school news, classroom highlights and educational insights to support your child&apos;s learning journey.
           </SectionHead>
           <FadeInStagger className="grid gap-8 md:grid-cols-3">
-            {home.journal.map((b) => (
+            {journalPosts.map((b) => (
               <FadeInItem key={b.title}>
-                <article className="card card-hover h-full overflow-hidden p-0">
-                  <div className="relative aspect-[16/10] bg-brand-soft">
+                <article className="h-full">
+                  <div className="relative aspect-[16/11] overflow-hidden rounded-2xl bg-brand-soft shadow-card">
                     <Image src={b.img} alt={b.title} fill sizes="(max-width: 768px) 90vw, 30vw" className="object-cover" />
                   </div>
-                  <div className="p-6">
-                    <span className="text-xs uppercase tracking-wide text-ink-muted">{b.meta}</span>
-                    <h3 className="mt-2 text-lg font-bold">{b.title}</h3>
-                    <p className="mt-1 text-sm text-ink-soft">{b.text}</p>
-                    <Link href="/gallery" className="mt-2 inline-block text-sm font-semibold text-brand">Read More →</Link>
+                  <div className="mt-4 flex items-center justify-between text-xs text-ink-muted">
+                    <span>Activities</span>
+                    <span>Feb 02, 2023</span>
                   </div>
+                  <h3 className="mt-2 text-lg font-bold leading-snug">{b.title}</h3>
+                  <p className="mt-1.5 text-sm text-ink-soft">{b.text}</p>
+                  <Link href="/gallery" className="mt-3 inline-block text-sm font-semibold text-ink">Read More →</Link>
                 </article>
               </FadeInItem>
             ))}
@@ -305,26 +302,46 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* NEWSLETTER */}
-      <section className="section bg-cream pt-0">
-        <div className="container-x">
-          <FadeIn>
-            <div className="relative overflow-hidden rounded-xl3 bg-gradient-to-br from-brand to-brand-dark p-10 text-center text-white sm:p-12">
-              <div className="pointer-events-none absolute -right-10 -top-16 h-52 w-52 rounded-full bg-white/10" />
-              <h2 className="relative text-2xl font-extrabold sm:text-3xl">Stay in the Loop</h2>
-              <p className="relative mx-auto mt-2 max-w-xl text-white/85">
-                Join our newsletter for parenting tips, centre news and early-learning ideas — straight to your inbox.
-              </p>
-              <div className="relative mt-6"><NewsletterForm /></div>
+      {/* CONTACT */}
+      <section id="contact" className="section scroll-mt-24 bg-cream">
+        <div className="container-x grid items-start gap-12 lg:grid-cols-2">
+          <FadeIn direction="right">
+            <h2 className="text-3xl font-extrabold sm:text-4xl">
+              <Colorful text="Contact us — we'd love to hear from you." map={{ "we'd love": "text-brand", "to hear": "text-accent-lime" }} />
+            </h2>
+            <ul className="mt-8 space-y-4">
+              {[
+                { c: "bg-accent-sky/20 text-accent-sky", n: "677 172 979" },
+                { c: "bg-accent-green/20 text-accent-green", n: "654 448 959" },
+                { c: "bg-accent-yellow/25 text-[#d19b00]", n: "620 492 158" },
+              ].map((p) => (
+                <li key={p.n} className="flex items-center gap-3">
+                  <span className={`grid h-11 w-11 place-items-center rounded-full ${p.c}`}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.24 11 11 0 0 0 3.5.56 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1 11 11 0 0 0 .56 3.5 1 1 0 0 1-.24 1Z" fill="currentColor"/></svg>
+                  </span>
+                  <a href={`tel:+237${p.n.replace(/\s/g, "")}`} className="text-lg font-semibold text-ink hover:text-brand">{p.n}</a>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6">
+              <div className="text-sm text-ink-muted">Address</div>
+              <div className="font-semibold text-brand">Shell Nsimeyong, Road going to Effoulan</div>
+            </div>
+            <div className="mt-4">
+              <div className="text-sm text-ink-muted">Email</div>
+              <a href={`mailto:${site.email}`} className="font-semibold text-ink hover:text-brand">{site.email}</a>
+            </div>
+            <div className="mt-6 flex gap-2.5">
+              {["f", "in", "◎", "✕"].map((s, i) => (
+                <a key={i} href="#" aria-label="social link" className="grid h-10 w-10 place-items-center rounded-full bg-white text-ink shadow-card transition-colors hover:bg-brand hover:text-white">{s}</a>
+              ))}
             </div>
           </FadeIn>
+          <FadeIn direction="left"><HomeContactForm /></FadeIn>
         </div>
       </section>
 
-      <CtaBanner
-        title="Ready to Give Your Child the Best Start?"
-        text="Book a visit to Granny's Daycare Center in Shell Obili, Yaoundé and see the warm, joyful space where your child will learn, play and grow."
-      />
+      <ReadyCta />
     </>
   );
 }

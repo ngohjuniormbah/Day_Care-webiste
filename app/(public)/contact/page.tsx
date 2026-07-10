@@ -8,7 +8,7 @@ import { getContent } from "@/lib/content-store";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Contact Granny's Daycare Center in Shell Obili, Yaoundé, Cameroon. Call, email or send a message to book a visit or enroll your child. Find us on the map.",
+    "Contact Granny's Daycare Center in Shell Nsimeyong, Yaoundé, Cameroon. Call, email or send a message to book a visit or enroll your child. Find us on the map.",
   alternates: { canonical: "/contact" },
 };
 
@@ -112,13 +112,13 @@ export default async function ContactPage() {
       {/* MAP */}
       <section className="section bg-gradient-to-b from-white to-brand-tint">
         <div className="container-x">
-          <SectionHead eyebrow="Find us" title={<>We&apos;re in <span className="text-brand">Shell Obili, Yaoundé</span></>}>
-            Located near Shell Obili in Yaoundé, Cameroon — easy to reach for families across the city.
+          <SectionHead eyebrow="Find us" title={<>We&apos;re in <span className="text-brand">Shell Nsimeyong, Yaoundé</span></>}>
+            Located near Shell Nsimeyong in Yaoundé, Cameroon — easy to reach for families across the city.
           </SectionHead>
           <FadeIn>
             <div className="overflow-hidden rounded-xl2 border-[6px] border-white shadow-soft">
               <iframe
-                title="Map of Granny's Daycare Center — Shell Obili, Yaoundé, Cameroon"
+                title="Map of Granny's Daycare Center — Shell Nsimeyong, Yaoundé, Cameroon"
                 src={site.mapEmbed}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

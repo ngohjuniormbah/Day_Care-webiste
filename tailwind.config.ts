@@ -24,8 +24,14 @@ const config: Config = {
         accent: {
           yellow: "#ffce4a",
           green: "#4fbf8b",
+          lime: "#9caa2c",
           coral: "#ff7a6b",
+          orange: "#f47b2a",
           sky: "#6fb7e8",
+        },
+        lilac: {
+          DEFAULT: "#a89fd0",
+          dark: "#8f83c4",
         },
       },
       fontFamily: {

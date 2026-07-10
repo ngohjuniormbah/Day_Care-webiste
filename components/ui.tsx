@@ -2,6 +2,31 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { FadeIn } from "@/components/motion/FadeIn";
 
+/**
+ * Renders a string with selected words/phrases coloured — the signature
+ * multi-colour headline style used across Granny's Daycare Center. Pass a map
+ * of phrase → Tailwind text-colour class. Longer phrases are matched first.
+ */
+export function Colorful({ text, map }: { text: string; map: Record<string, string> }) {
+  const keys = Object.keys(map).sort((a, b) => b.length - a.length);
+  if (keys.length === 0) return <>{text}</>;
+  const escaped = keys.map((k) => k.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const re = new RegExp(`(${escaped.join("|")})`, "g");
+  return (
+    <>
+      {text.split(re).map((part, i) =>
+        map[part] ? (
+          <span key={i} className={map[part]}>
+            {part}
+          </span>
+        ) : (
+          <span key={i}>{part}</span>
+        ),
+      )}
+    </>
+  );
+}
+
 /** Clean, icon-free content card with a subtle brand accent bar. */
 export function AccentCard({
   title,

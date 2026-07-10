@@ -29,8 +29,13 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   alternates: { canonical: "/" },
   icons: {
-    icon: "/images/favicon.svg",
-    apple: "/images/favicon.svg",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/images/icon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/images/icon-16.png", type: "image/png", sizes: "16x16" },
+    ],
+    apple: "/apple-touch-icon.png",
+    shortcut: "/favicon.ico",
   },
   manifest: "/site.webmanifest",
   openGraph: {

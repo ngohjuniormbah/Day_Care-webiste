@@ -1,10 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FadeIn, FadeInStagger, FadeInItem } from "@/components/motion/FadeIn";
-import { CtaBanner, SectionHead, AccentCard } from "@/components/ui";
+import { CtaBanner, SectionHead, AccentCard, Colorful } from "@/components/ui";
 import { Faq } from "@/components/Faq";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { getContent } from "@/lib/content-store";
+
+// Petals for the hero photo cluster — each teardrop points toward the centre.
+const petals = [
+  { src: "/images/care.jpg", alt: "A caregiver helping a child learn", pos: "rounded-[45%_45%_12%_45%]" },
+  { src: "/images/classroom.jpg", alt: "Children playing together on the classroom rug", pos: "rounded-[45%_45%_45%_12%]" },
+  { src: "/images/playground.jpg", alt: "Children enjoying outdoor play", pos: "rounded-[45%_12%_45%_45%]" },
+  { src: "/images/facility.jpg", alt: "A happy child at Granny's Daycare Center", pos: "rounded-[12%_45%_45%_45%]" },
+];
 
 export default async function Home() {
   const { home, faqs } = await getContent();
@@ -13,17 +21,35 @@ export default async function Home() {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden py-16 sm:py-20">
+      <section className="relative overflow-hidden bg-peach/40 py-16 sm:py-20">
         <div className="container-x grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
           <FadeIn once direction="right">
-            {hero.badge && <span className="eyebrow mb-4">{hero.badge}</span>}
-            <h1 className="text-4xl font-extrabold leading-tight sm:text-5xl lg:text-6xl">
-              {hero.title} <span className="text-brand">{hero.titleAccent}</span>
+            <h1 className="text-4xl font-extrabold leading-[1.1] sm:text-5xl lg:text-[3.4rem]">
+              <Colorful
+                text="A Safe & Loving Place for Your Child to Learn, Play & Grow"
+                map={{
+                  Safe: "text-accent-lime",
+                  Loving: "text-brand",
+                  "Your Child": "text-brand",
+                  Learn: "text-accent-lime",
+                  Grow: "text-accent-lime",
+                }}
+              />
             </h1>
             <p className="mt-5 max-w-lg text-lg text-ink-soft">{hero.lead}</p>
-            <div className="mt-7 flex flex-wrap gap-3.5">
-              <Link href="/contact" className="btn btn-lg">Get in Touch</Link>
-              <Link href="/program" className="btn btn-ghost btn-lg">Explore Programs</Link>
+            <div className="mt-8 flex flex-wrap items-center gap-6">
+              <Link href="/contact" className="btn btn-lg">Get In Touch</Link>
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {["#ffce4a", "#4fbf8b", "#6fb7e8", "#ff7a6b"].map((c) => (
+                    <span key={c} className="h-9 w-9 rounded-full border-2 border-cream" style={{ backgroundColor: c }} />
+                  ))}
+                </div>
+                <div>
+                  <div className="text-sm text-accent-yellow">★★★★★</div>
+                  <div className="text-xs font-semibold text-ink-muted">Happy Kids</div>
+                </div>
+              </div>
             </div>
             <div className="mt-9 flex flex-wrap gap-8">
               {hero.stats.map((s) => (
@@ -36,18 +62,21 @@ export default async function Home() {
           </FadeIn>
 
           <FadeIn once direction="left" className="relative">
-            <div className="absolute inset-0 m-auto w-[92%] rounded-full bg-gradient-to-br from-brand-soft to-transparent blur-2xl" />
-            <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[40%_40%_46%_46%/46%] bg-brand-soft shadow-soft">
-              <Image src="/images/hero.jpg" alt="A caregiver with happy children at Granny's Daycare Center" fill priority sizes="(max-width: 1024px) 90vw, 40vw" className="object-cover" />
+            <div className="absolute inset-0 m-auto w-[85%] rounded-full bg-gradient-to-br from-brand-soft to-transparent blur-2xl" />
+            <div className="relative mx-auto grid aspect-square w-full max-w-[30rem] grid-cols-2 gap-2.5">
+              {petals.map((p) => (
+                <div key={p.src} className={`relative overflow-hidden shadow-card ${p.pos}`}>
+                  <Image src={p.src} alt={p.alt} fill priority sizes="(max-width: 1024px) 45vw, 20vw" className="object-cover" />
+                </div>
+              ))}
             </div>
-            {/* Clean text-only floating labels (no icons) */}
-            <div className="absolute left-0 top-[10%] animate-floaty rounded-2xl bg-white px-4 py-3 text-sm font-semibold shadow-card">
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-accent-green" />Outdoor Learning</span>
-              <span className="mt-0.5 block text-xs font-normal text-ink-muted">Fresh air &amp; play every day</span>
-            </div>
-            <div className="absolute -right-2 bottom-[16%] animate-floaty rounded-2xl bg-white px-4 py-3 text-sm font-semibold shadow-card [animation-delay:1.4s]">
-              <span className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-brand" />Full Childcare</span>
-              <span className="mt-0.5 block text-xs font-normal text-ink-muted">Open all year round</span>
+            {/* Floating label card */}
+            <div className="absolute -bottom-4 left-1/2 flex -translate-x-1/2 animate-floaty items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-soft">
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-accent-yellow/25 text-lg">☀️</span>
+              <span className="text-sm">
+                <span className="block font-bold text-ink">Outdoor Learning</span>
+                <span className="block text-xs text-ink-muted">Hands-on play that builds curiosity</span>
+              </span>
             </div>
           </FadeIn>
         </div>
@@ -56,7 +85,7 @@ export default async function Home() {
       {/* LEARNING APPROACH */}
       <section className="section bg-gradient-to-b from-white to-brand-tint">
         <div className="container-x">
-          <SectionHead eyebrow="Our approach" title={<>Our Unique <span className="text-brand">Learning Approach</span> for Young Minds</>}>
+          <SectionHead eyebrow="Our approach" title={<Colorful text="Our Unique Learning Approach for Young Minds" map={{ Unique: "text-brand", Approach: "text-accent-lime", Minds: "text-accent-lime" }} />}>
             A caring approach and thoughtfully designed programmes set us apart, with small age steps that ensure precious attention for every child.
           </SectionHead>
           <FadeInStagger className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -70,7 +99,7 @@ export default async function Home() {
       {/* CARE PLANS */}
       <section className="section bg-cream">
         <div className="container-x">
-          <SectionHead eyebrow="Flexible care" title={<>Easy Drop-Off &amp; Pick-Up for <span className="text-brand">Every Family</span></>}>
+          <SectionHead eyebrow="Flexible care" title={<Colorful text="Flexible Care Options — Easy Drop-Off & Pick-Up for Every Family" map={{ Flexible: "text-brand", Options: "text-accent-lime", "Drop-Off": "text-brand", "Every Family": "text-accent-lime" }} />}>
             Our plans are carefully structured to support children of every learning ability, based on their developmental stage.
           </SectionHead>
           <FadeInStagger className="grid gap-8 md:grid-cols-3">
@@ -122,7 +151,7 @@ export default async function Home() {
       {/* PROGRAMS PREVIEW */}
       <section className="section bg-cream">
         <div className="container-x">
-          <SectionHead eyebrow="Programmes" title={<>Our Amazing <span className="text-brand">Programs</span></>}>
+          <SectionHead eyebrow="Programmes" title={<Colorful text="Our Amazing Programs" map={{ Amazing: "text-brand" }} />}>
             Our caring approach and thoughtfully designed programmes set us apart, with small age steps that ensure precious attention for every child.
           </SectionHead>
           <div className="grid items-center gap-10 md:grid-cols-2">
@@ -241,9 +270,9 @@ export default async function Home() {
       </section>
 
       {/* FAQ */}
-      <section className="section bg-gradient-to-b from-white to-brand-tint">
+      <section id="faq" className="section scroll-mt-24 bg-gradient-to-b from-white to-brand-tint">
         <div className="container-x">
-          <SectionHead eyebrow="Good to know" title={<>Frequently Asked <span className="text-brand">Questions</span></>}>
+          <SectionHead eyebrow="Good to know" title={<Colorful text="Frequently Asked Questions" map={{ Questions: "text-brand" }} />}>
             Everything you need to know before your child joins the Granny&apos;s family.
           </SectionHead>
           <FadeIn><Faq items={faqs} /></FadeIn>
@@ -253,7 +282,7 @@ export default async function Home() {
       {/* JOURNAL */}
       <section className="section bg-cream">
         <div className="container-x">
-          <SectionHead eyebrow="Our journal" title={<>Moments of <span className="text-brand">Learning</span>, Play, and Growth</>}>
+          <SectionHead eyebrow="Our journal" title={<Colorful text="Moments of Learning, Play, and Growth" map={{ Moments: "text-brand", "and Growth": "text-accent-lime" }} />}>
             Stay updated with the latest school news, classroom highlights and educational insights to support your child&apos;s learning journey.
           </SectionHead>
           <FadeInStagger className="grid gap-8 md:grid-cols-3">

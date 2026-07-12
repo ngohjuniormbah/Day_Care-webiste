@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { saveSubmission } from "@/lib/store";
+import { emailSubmission } from "@/lib/mailer";
 
 export const runtime = "nodejs";
 
@@ -29,7 +30,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const id = await saveSubmission("enrollment", {
+  const data = {
     parent_name: clean(b.parent_name),
     email: clean(b.email),
     phone: clean(b.phone),
@@ -38,7 +39,9 @@ export async function POST(req: Request) {
     program: clean(b.program),
     start_date: clean(b.start_date) || null,
     message: clean(b.message) || null,
-  });
+  };
+  const id = await saveSubmission("enrollment", data);
+  await emailSubmission(`New enrollment request for ${data.child_name}`, data);
 
   return NextResponse.json(
     {

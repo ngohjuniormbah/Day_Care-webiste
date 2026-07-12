@@ -2,6 +2,7 @@ import Script from "next/script";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Banner } from "@/components/Banner";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { site } from "@/lib/site";
 import { getContent } from "@/lib/content-store";
 
@@ -44,6 +45,7 @@ export default async function PublicLayout({ children }: { children: React.React
       <Header />
       <main>{children}</main>
       <Footer info={content.site} />
+      <WhatsAppButton />
     </>
   );
 }

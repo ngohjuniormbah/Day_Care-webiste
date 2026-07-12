@@ -9,7 +9,10 @@ export const site = {
   locality: "Yaoundé",
   country: "CM",
   phones: ["+237 677 172 979", "+237 654 448 959"],
-  email: "grannysdaycare@gmail.com",
+  email: "grannysdaycare6@gmail.com",
+  whatsapp: "+237 677 172 979",
+  whatsappLink:
+    "https://wa.me/237677172979?text=Hello%20Granny%27s%20Daycare!%20I%27d%20like%20to%20make%20an%20inquiry.",
   hours: "Monday – Friday · 07:00 – 18:00",
   mapEmbed:
     "https://www.google.com/maps?q=Shell%20Nsimeyong%2C%20Yaound%C3%A9%2C%20Cameroon&z=15&output=embed",

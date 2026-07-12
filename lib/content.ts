@@ -86,7 +86,7 @@ export const defaultContent: SiteContent = {
     tagline: "Nurturing young minds for a brighter future",
     address: "Shell Nsimeyong, Yaoundé, Cameroon",
     phones: ["+237 677 172 979", "+237 654 448 959"],
-    email: "grannysdaycare@gmail.com",
+    email: "grannysdaycare6@gmail.com",
     hours: "Monday – Friday · 07:00 – 18:00",
     mapEmbed:
       "https://www.google.com/maps?q=Shell%20Nsimeyong%2C%20Yaound%C3%A9%2C%20Cameroon&z=15&output=embed",

@@ -4,6 +4,7 @@ import { PageHero, SectionHead } from "@/components/ui";
 import { ContactForm, EnrollForm } from "@/components/Forms";
 import { Faq } from "@/components/Faq";
 import { getContent } from "@/lib/content-store";
+import { site as siteDefaults } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -15,11 +16,18 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
   const { site, contact, faqs } = await getContent();
 
-  const info = [
-    { h: "Address", v: site.address },
-    { h: "Phone", v: site.phones.join(" · ") },
-    { h: "Email", v: site.email },
-    { h: "Opening Hours", v: site.hours },
+  const info: { h: string; items: { text: string; href?: string }[] }[] = [
+    { h: "Address", items: [{ text: site.address }] },
+    {
+      h: "Phone",
+      items: site.phones.map((p) => ({ text: p, href: `tel:${p.replace(/\s/g, "")}` })),
+    },
+    {
+      h: "WhatsApp — quick replies & inquiries",
+      items: [{ text: siteDefaults.whatsapp, href: siteDefaults.whatsappLink }],
+    },
+    { h: "Email", items: [{ text: site.email, href: `mailto:${site.email}` }] },
+    { h: "Opening Hours", items: [{ text: site.hours }] },
   ];
 
   return (
@@ -40,14 +48,37 @@ export default async function ContactPage() {
               {info.map((i) => (
                 <li key={i.h} className="border-l-2 border-brand pl-4">
                   <strong className="block text-sm">{i.h}</strong>
-                  <span className="text-sm text-ink-soft">{i.v}</span>
+                  <span className="text-sm text-ink-soft">
+                    {i.items.map((item, idx) => (
+                      <span key={item.text}>
+                        {idx > 0 && " · "}
+                        {item.href ? (
+                          <a href={item.href} className="hover:text-brand hover:underline">
+                            {item.text}
+                          </a>
+                        ) : (
+                          item.text
+                        )}
+                      </span>
+                    ))}
+                  </span>
                 </li>
               ))}
             </ul>
             <div className="mt-6 flex gap-2.5">
-              {["Facebook", "Instagram", "WhatsApp", "X"].map((s) => (
-                <a key={s} href="#" className="rounded-full bg-brand-soft px-4 py-2 text-sm font-semibold text-brand transition hover:bg-brand hover:text-white">
-                  {s}
+              {[
+                { label: "Facebook", href: "#" },
+                { label: "Instagram", href: "#" },
+                { label: "WhatsApp", href: siteDefaults.whatsappLink, external: true },
+                { label: "X", href: "#" },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  {...(s.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="rounded-full bg-brand-soft px-4 py-2 text-sm font-semibold text-brand transition hover:bg-brand hover:text-white"
+                >
+                  {s.label}
                 </a>
               ))}
             </div>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { saveSubmission } from "@/lib/store";
+import { emailSubmission } from "@/lib/mailer";
 
 export const runtime = "nodejs";
 
@@ -28,12 +29,14 @@ export async function POST(req: Request) {
     );
   }
 
-  const id = await saveSubmission("contact", {
+  const data = {
     name: clean(b.name),
     email: clean(b.email),
     subject: clean(b.subject) || null,
     message: clean(b.message),
-  });
+  };
+  const id = await saveSubmission("contact", data);
+  await emailSubmission(`New contact message from ${data.name}`, data);
 
   return NextResponse.json(
     {
